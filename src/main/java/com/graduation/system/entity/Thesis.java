@@ -14,8 +14,8 @@ import static com.graduation.system.messages.EntityMessages.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "diplomaThesis")
-@Entity(name = "diplomaThesis")
+@Table(name = "thesis")
+@Entity(name = "thesis")
 public class Thesis extends BaseEntity {
 
     @Column(name = "text")

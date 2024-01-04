@@ -17,8 +17,8 @@ public class EntityMessages {
         public static final String SubjectNotNull = "Subject should not be null!";
         public static final String TaskLength = "Task should be less than 5 and more than 50 characters!";
         public static final String TaskNotNull = "Task should not be null!";
-        public static final String GoalLength = "Goal should be less than 5 and more than 50 characters!";
-        public static final String GoalNotNull = "Goal should not be null!";
+        public static final String PurposeLength = "Purpose should be less than 5 and more than 50 characters!";
+        public static final String PurposeNotNull = "Purpose should not be null!";
     }
 
     public static class StudentMessage {

@@ -12,8 +12,8 @@ import static com.graduation.system.messages.EntityMessages.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name = "diplomaApplication")
-@Entity(name = "diplomaApplication")
+@Table(name = "applications")
+@Entity(name = "applications")
 public class Application extends BaseEntity {
 
     @Column(name = "subject")
@@ -26,10 +26,10 @@ public class Application extends BaseEntity {
     @Size(min = 5, max = 30)
     private String task;
 
-    @Column(name = "goal")
-    @NotNull(message = ApplicationMessage.GoalNotNull)
-    @Size(min = 5, max = 50, message = ApplicationMessage.GoalLength)
-    private String goal;
+    @Column(name = "purpose")
+    @NotNull(message = ApplicationMessage.PurposeNotNull)
+    @Size(min = 5, max = 50, message = ApplicationMessage.PurposeLength)
+    private String purpose;
 
     @Column(name = "approved")
     private boolean approved;
