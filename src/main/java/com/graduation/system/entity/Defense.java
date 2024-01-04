@@ -15,8 +15,8 @@ import static com.graduation.system.messages.EntityMessages.*;
 @Setter
 @AllArgsConstructor
 @Embeddable
-@Entity
-@Table(name = "diplomaDefense")
+@Entity(name = "defenses")
+@Table(name = "defenses")
 public class Defense {
     @EmbeddedId
     private DefenseId defenseId;

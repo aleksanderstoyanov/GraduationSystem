@@ -1,11 +1,12 @@
 package com.graduation.system.entity;
 
-import com.graduation.system.entity.enums.Position;
+import com.graduation.system.enums.Position;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -15,22 +16,22 @@ import static com.graduation.system.messages.EntityMessages.*;
 
 @Getter
 @Setter
-@Table
-@Entity
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "teachers")
+@Table(name = "teachers")
 public class Teacher extends BaseEntity {
 
     @NotNull(message = TeacherMessage.PositionNotNull)
     @Column(name = "position")
     private Position Position;
 
-    @NotNull(message = CommonMessage.NameNotNull)
-    @Column(name = "name")
-    @Size(min = 4, max = 15, message = CommonMessage.NameLength)
-    private String name;
+    @Column(name = "egn")
+    @Size(min = 10, max = 10, message = "EGN should be exactly 10 symbols")
+    private String egn;
 
     @OneToMany(mappedBy = "teacher")
-    private List<Application> diplomaApplications;
+    private List<Application> applications;
 
     @OneToMany(
             mappedBy = "teacher",
@@ -38,4 +39,8 @@ public class Teacher extends BaseEntity {
             orphanRemoval = true
     )
     private Set<Defense> defenses;
+
+    @OneToOne
+    @JoinColumn(name = "user_egn")
+    private User user;
 }

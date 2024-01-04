@@ -1,4 +1,4 @@
-package com.graduation.system.entity.enums;
+package com.graduation.system.enums;
 
 public enum Position {
     ASSISTANT,
