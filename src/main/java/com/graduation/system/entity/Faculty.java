@@ -23,5 +23,4 @@ public class Faculty extends BaseEntity {
 
     @OneToMany(mappedBy = "faculty")
     private Set<User> users;
-
 }

@@ -23,7 +23,7 @@ public class EntityMessages {
 
     public static class StudentMessage {
         public static final String FnNotNull = "Faculty Number cannot be null!";
-        public static final String FnLength = "Student Name should not be less than 4 and more than 15 characters!";
+        public static final String FnLength = "Student Faculty Number should not be less than 7 and more than 7 characters!";
     }
 
     public static class TeacherMessage {

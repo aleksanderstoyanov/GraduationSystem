@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "users")
 @Table(name = "users")
-public class User extends BaseEntity  {
+public class User extends BaseEntity {
     @NotNull
     private String email;
     @NotNull
@@ -39,7 +42,7 @@ public class User extends BaseEntity  {
     @Size(min = 4, max = 15, message = EntityMessages.CommonMessage.NameLength)
     private String lastName;
 
-    @Column(name="egn")
+    @Column(name = "egn", unique = true)
     @Size(min = 10, max = 10, message = "EGN should be exactly 10 symbols")
     private String egn;
 
@@ -47,16 +50,19 @@ public class User extends BaseEntity  {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.DETACH, orphanRemoval = true)
     private Student student;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.DETACH, orphanRemoval = true)
     private Teacher teacher;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(
-            name="users_roles",
-            joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private List<Role> roles = new ArrayList<>();
+    public String getFaculty() {
+        return faculty.getName();
+    }
 }
