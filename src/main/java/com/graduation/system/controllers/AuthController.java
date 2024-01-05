@@ -32,11 +32,6 @@ public class AuthController {
         return "auth/register.html";
     }
 
-//    @GetMapping(value = "/login")
-//    public String loging(Model model){
-//        UserDto
-//    }
-
     @PostMapping(value = "/register")
     public String register(@Valid @ModelAttribute("user") RegisterDTO registerDto,
                            BindingResult bindingResult,
@@ -53,7 +48,7 @@ public class AuthController {
 
         _userService.register(registerDto);
 
-        return "redirect: /login";
+        return "redirect:/login";
     }
 
     @GetMapping(value = "/login")
