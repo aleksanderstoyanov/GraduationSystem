@@ -24,10 +24,19 @@ public class RegisterServiceImpl implements RegisterService {
     private FacultyServiceImpl _facultyService;
 
     @Autowired
+    private RoleServiceImpl _roleService;
+
+    @Autowired
     private PasswordEncoder _passwordEncoder;
+
+    public User findByEgn(String egn){
+        return _repository.findByEgn(egn);
+    }
+
     public User findByUsername(String username){
         return _repository.findByUsername(username);
     }
+
     public void register(RegisterDTO registerDto) throws Exception{
         if (_repository.findByUsername(registerDto.getUsername()) != null){
             return;
@@ -35,11 +44,15 @@ public class RegisterServiceImpl implements RegisterService {
         else{
             User user = new User();
 
+            Role role = _roleService.getByRole("NONE");
+
             user.setEmail(registerDto.getEmail());
             user.setFirstName(registerDto.getFirstName());
             user.setLastName(registerDto.getLastName());
+            user.setEgn(registerDto.getEgn());
             user.setUsername(registerDto.getUsername());
             user.setPassword(_passwordEncoder.encode(registerDto.getPassword()));
+            user.setRoles(Arrays.asList(role));
 
             Faculty faculty = _facultyService.getByName(registerDto.getFaculty());
 

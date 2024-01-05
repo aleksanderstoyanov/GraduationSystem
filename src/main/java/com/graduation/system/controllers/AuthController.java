@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,13 @@ public class AuthController {
             List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
             model.addAttribute("faculties", faculties);
 
+            return "auth/register.html";
+        }
+
+        if(_userService.findByEgn(registerDto.getEgn()) != null){
+            bindingResult.rejectValue("egn", "error.user", "EGN is already taken!");
+            List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
+            model.addAttribute("faculties", faculties);
             return "auth/register.html";
         }
 

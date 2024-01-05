@@ -34,6 +34,8 @@ public class SecurityConfig {
                 .requestMatchers("*.js").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/admin").hasAuthority("ADMIN")
+                .requestMatchers("/admin/*").hasAuthority("ADMIN")
                 .anyRequest().permitAll()
         );
 
