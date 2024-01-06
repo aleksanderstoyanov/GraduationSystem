@@ -13,11 +13,11 @@ public class EntityMessages {
     }
 
     public static class ApplicationMessage {
-        public static final String SubjectLength = "Subject should be less than 5 and more than 30 characters!";
+        public static final String SubjectLength = "Subject should not be less than 5 and more than 30 characters!";
         public static final String SubjectNotNull = "Subject should not be null!";
-        public static final String TaskLength = "Task should be less than 5 and more than 50 characters!";
+        public static final String TaskLength = "Task should not be less than 5 and more than 50 characters!";
         public static final String TaskNotNull = "Task should not be null!";
-        public static final String PurposeLength = "Purpose should be less than 5 and more than 50 characters!";
+        public static final String PurposeLength = "Purpose should not be less than 5 and more than 50 characters!";
         public static final String PurposeNotNull = "Purpose should not be null!";
     }
 
