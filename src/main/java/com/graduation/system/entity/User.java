@@ -26,10 +26,13 @@ import java.util.List;
 @Table(name = "users")
 public class User extends BaseEntity {
     @NotNull
+    @Column(name = "email", unique = true)
     private String email;
     @NotNull
+    @Column(name = "username", unique = true)
     private String username;
     @NotNull
+    @Column(name = "password")
     private String password;
 
     @NotNull(message = EntityMessages.CommonMessage.NameNotNull)
