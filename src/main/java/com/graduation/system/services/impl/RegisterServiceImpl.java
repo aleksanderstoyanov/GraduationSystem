@@ -29,14 +29,17 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private PasswordEncoder _passwordEncoder;
 
+    @Override
     public User findByEgn(String egn){
         return _repository.findByEgn(egn);
     }
 
+    @Override
     public User findByUsername(String username){
         return _repository.findByUsername(username);
     }
 
+    @Override
     public void register(RegisterDTO registerDto) throws Exception{
         if (_repository.findByUsername(registerDto.getUsername()) != null){
             return;
@@ -64,6 +67,7 @@ public class RegisterServiceImpl implements RegisterService {
         }
     }
 
+    @Override
     public void registerAdmin(RegisterDTO registerDto, Role role) throws Exception{
         if (_repository.findByUsername(registerDto.getUsername()) != null){
             return;

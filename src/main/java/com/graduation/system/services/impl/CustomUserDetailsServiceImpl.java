@@ -40,4 +40,9 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService, UserSer
                 .collect(Collectors.toList());
         return mapRoles;
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

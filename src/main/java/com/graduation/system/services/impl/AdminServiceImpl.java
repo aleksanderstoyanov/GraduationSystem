@@ -90,6 +90,7 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public void updateUser(AdminEditDTO editDTO) throws Exception{
 
         User user = _repository.findByEgn(editDTO.getEgn());
@@ -138,9 +139,12 @@ public class AdminServiceImpl implements AdminService {
         _repository.save(user);
     }
 
+    @Override
     public User findById(Long id){
         return _repository.findById(id).get();
     }
+
+    @Override
     public List<User> findAllUsers(){
         return _repository.findAllUsersWithoutAdmin();
     }

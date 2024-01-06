@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+    User findByEmail(String email);
     User findByEgn(String egn);
     @Query(value = "select * from users where username != 'ADMIN'", nativeQuery = true)
     List<User> findAllUsersWithoutAdmin();

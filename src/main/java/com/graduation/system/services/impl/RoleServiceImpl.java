@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class RoleServiceImpl implements RoleService {
     private RoleRepository _repository;
 
+    @Override
     public Role getByRole(String roleName){
         return _repository.findByRole(Enum.valueOf(UserRole.class, roleName));
     }
 
+    @Override
     public void createRole(String roleName){
         if (getByRole(roleName) == null){
             Role role = new Role();

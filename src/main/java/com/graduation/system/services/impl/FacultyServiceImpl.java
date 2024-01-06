@@ -12,10 +12,12 @@ public class FacultyServiceImpl implements FacultyService {
     @Autowired
     private FacultyRepository _repository;
 
+    @Override
     public Faculty getByName(String name){
         return _repository.findByName(name);
     }
 
+    @Override
     public void create(String name){
         if (getByName(name) == null){
             Faculty faculty = new Faculty();
