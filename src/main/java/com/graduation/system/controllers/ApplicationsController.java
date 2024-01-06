@@ -3,7 +3,6 @@ package com.graduation.system.controllers;
 import com.graduation.system.dto.ApplicationCreateDTO;
 import com.graduation.system.dto.ApplicationEditDTO;
 import com.graduation.system.entity.Application;
-import com.graduation.system.entity.Role;
 import com.graduation.system.enums.UserRole;
 import com.graduation.system.services.impl.ApplicationServiceImpl;
 import jakarta.validation.Valid;
@@ -34,7 +33,7 @@ public class ApplicationsController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -49,7 +48,7 @@ public class ApplicationsController {
     public String myApplications(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -66,8 +65,8 @@ public class ApplicationsController {
     public String facultyApplications(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if((!IsInRole(authentication, UserRole.TEACHER.name()) &&
-           (!IsInRole(authentication, UserRole.STUDENT.name()))
+        if((!isInRole(authentication, UserRole.TEACHER.name()) &&
+           (!isInRole(authentication, UserRole.STUDENT.name()))
         )
         ){
             throw new IllegalArgumentException();
@@ -83,7 +82,6 @@ public class ApplicationsController {
         return "/applications/facultyApplications.html";
     }
 
-
     @PostMapping(value = "/applications/create")
     public String create(@Valid @ModelAttribute("application") ApplicationCreateDTO createDTO,
                          BindingResult bindingResult,
@@ -91,7 +89,7 @@ public class ApplicationsController {
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -110,7 +108,7 @@ public class ApplicationsController {
     public String edit(@PathVariable Long id, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -140,7 +138,7 @@ public class ApplicationsController {
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -158,7 +156,7 @@ public class ApplicationsController {
     public String delete(@PathVariable Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(!IsInRole(authentication, UserRole.STUDENT.name())) {
+        if(!isInRole(authentication, UserRole.STUDENT.name())) {
             throw new IllegalArgumentException();
         }
 
@@ -166,7 +164,7 @@ public class ApplicationsController {
 
         return "redirect:/applications/myApplications";
     }
-    private boolean IsInRole(Authentication authentication, String role) {
+    private boolean isInRole(Authentication authentication, String role) {
         boolean hasAuthority = authentication
                 .getAuthorities()
                 .stream()
