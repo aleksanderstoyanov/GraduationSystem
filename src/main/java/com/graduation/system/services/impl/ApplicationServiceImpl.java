@@ -4,6 +4,7 @@ import com.graduation.system.dto.ApplicationCreateDTO;
 import com.graduation.system.dto.ApplicationEditDTO;
 import com.graduation.system.entity.Application;
 import com.graduation.system.entity.Student;
+import com.graduation.system.entity.Teacher;
 import com.graduation.system.entity.User;
 import com.graduation.system.repository.ApplicationRepository;
 import com.graduation.system.services.contracts.ApplicationService;
@@ -36,6 +37,11 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setSubject(applicationCreateDTO.getSubject());
         application.setStudent(student);
 
+        _repository.save(application);
+    }
+
+    @Override
+    public void updateApplication(Application application) {
         _repository.save(application);
     }
 

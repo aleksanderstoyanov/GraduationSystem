@@ -9,10 +9,10 @@ import java.util.List;
 public interface ApplicationService {
 
     void createStudentApplication(ApplicationCreateDTO applicationCreateDTO, String username);
+    void updateApplication(Application application);
     void updateStudentApplication(ApplicationEditDTO applicationEditDTO, Long id);
     void deleteStudentApplication(Long id);
     Application getApplicationById(Long id);
-
     List<Application> getStudentApplicationsByFaculty(String email);
     List<Application> getStudentApplications(String email);
 
