@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="common/fragments :: head">
+</head>
+<body>
+<main>
+    <nav th:replace="common/fragments :: header"></nav>
+    <div class="container">
+        <div class="table-title">
+            <h2 th:text="${message}"></h2>
+        </div>
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Purpose</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="facultyApplication: ${facultyApplications}">
+                        <td><i class="fa-regular fa-file"></i></td>
+                        <td th:text="${facultyApplication.subject}"></td>
+                        <td th:text="${facultyApplication.task}"></td>
+                        <td th:text="${facultyApplication.purpose}"></td>
+                        <td sec:authorize="hasAuthority('TEACHER')">
+                            <a th:href="@{'/applications/join/' + ${facultyApplication.id}}" type="button" class="btn btn-primary">Join +</a>
+                            <a th:href="@{'/applications/approve/' + ${facultyApplication.id}}" type="button" class="btn btn-success">Approve <i class="fa-solid fa-check"></i></a>
+                            <a th:href="@{'/applications/disapprove/' + ${facultyApplication.id}}" type="button" class="btn btn-danger">Disapprove<i class="fa-solid fa-x"></i></a>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style>
+        td > .fa-user{
+            display:flex;
+            justify-content:center;
+            margin: 7%;
+        }
+        .table {
+            overflow: scroll;
+        }
+        .table-wrapper{
+            height: 500px;
+            margin: 5%
+        }
+    </style>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+<footer th:replace="common/fragments :: footer">
+</footer>
+</html>

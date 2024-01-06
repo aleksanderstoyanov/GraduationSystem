@@ -16,8 +16,14 @@
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a class="nav-link" th:href="@{/admin/users}">Users</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Student Works</a>
+            <li class="nav-item" sec:authorize="hasAuthority('STUDENT')">
+                <a class="nav-link" th:href="@{/applications/create}">Create Application</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAuthority('STUDENT')">
+                <a class="nav-link" th:href="@{/applications/myApplications}">My Applications</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasAuthority('TEACHER')">
+                <a class="nav-link" th:href="@{/applications/facultyApplications}">Faculty Applications</a>
             </li>
             <div class="login-register-container">
                 <li class="nav-item" sec:authorize="isAnonymous()">
