@@ -1,4 +1,4 @@
-package com.graduation.system.services;
+package com.graduation.system.services.impl;
 
 
 import com.graduation.system.entity.Faculty;
@@ -15,7 +15,7 @@ import java.util.Random;
 
 @AllArgsConstructor
 @Service
-public class StudentServicedImpl {
+public class StudentServiceImpl {
     @Autowired
     private FacultyServiceImpl _facultyService;
     private StudentRepository _repository;
@@ -59,8 +59,6 @@ public class StudentServicedImpl {
 
         String fn = generateFacultyNumber();
         student.setFn(fn);
-
-        //student.setUser(user);
 
         _repository.save(student);
     }
