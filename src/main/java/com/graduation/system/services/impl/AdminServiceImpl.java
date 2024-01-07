@@ -3,22 +3,17 @@ package com.graduation.system.services.impl;
 import com.graduation.system.dto.AdminEditDTO;
 import com.graduation.system.entity.*;
 import com.graduation.system.enums.Position;
-import com.graduation.system.repository.StudentRepository;
 import com.graduation.system.repository.UserRepository;
-import com.graduation.system.services.StudentServicedImpl;
 import com.graduation.system.services.contracts.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    private StudentServicedImpl _studentService;
+    private StudentServiceImpl _studentService;
 
     private RoleServiceImpl _roleService;
     private FacultyServiceImpl _facultyService;

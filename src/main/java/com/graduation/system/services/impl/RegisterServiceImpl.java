@@ -68,7 +68,7 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public void registerAdmin(RegisterDTO registerDto, Role role) throws Exception{
+    public void registerWithRole(RegisterDTO registerDto, Role role) throws Exception{
         if (_repository.findByUsername(registerDto.getUsername()) != null){
             return;
         }

@@ -30,6 +30,8 @@ public class DbSeeder implements CommandLineRunner {
         seedRoles();
         seedAdminUser();
         seedFaculties();
+        seedStudentUser();
+        seedTeacherUser();
     }
 
     public void seedAdminUser() throws Exception{
@@ -43,9 +45,42 @@ public class DbSeeder implements CommandLineRunner {
 
         if (_userService.findByUsername(registerDto.getUsername()) == null){
             Role adminRole = _roleService.getByRole(UserRole.ADMIN.name());
-            _userService.registerAdmin(registerDto, adminRole);
+            _userService.registerWithRole(registerDto, adminRole);
         }
     }
+
+    public void seedStudentUser() throws Exception{
+        RegisterDTO registerDto = new RegisterDTO();
+
+        registerDto.setEmail("student@student.com");
+        registerDto.setFirstName("Student");
+        registerDto.setLastName("Student");
+        registerDto.setUsername("student");
+        registerDto.setEgn("0141246326");
+        registerDto.setFaculty("INFORMATICS");
+        registerDto.setPassword("123123");
+
+        if (_userService.findByUsername(registerDto.getUsername()) == null){
+            _userService.register(registerDto);
+        }
+    }
+
+    public void seedTeacherUser() throws Exception{
+        RegisterDTO registerDto = new RegisterDTO();
+
+        registerDto.setEmail("teacher@teacher.com");
+        registerDto.setFirstName("Teacher");
+        registerDto.setLastName("Teacher");
+        registerDto.setUsername("teacher");
+        registerDto.setEgn("0141246327");
+        registerDto.setFaculty("INFORMATICS");
+        registerDto.setPassword("123123");
+
+        if (_userService.findByUsername(registerDto.getUsername()) == null){
+            _userService.register(registerDto);
+        }
+    }
+
     public void seedRoles(){
 
         Arrays.stream(UserRole.values()).forEach(field -> {
