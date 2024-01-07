@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 
@@ -13,6 +14,7 @@ import static com.graduation.system.messages.EntityMessages.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "thesis")
 @Entity(name = "thesis")
@@ -31,6 +33,10 @@ public class Thesis extends BaseEntity {
     @Column(name = "submittedDate")
     @NotNull(message = CommonMessage.SubmittedDateNotNull)
     private LocalDate submittedDate;
+
+    @OneToOne
+    @JoinColumn(name = "application_id")
+    private Application application;
 
     @OneToOne
     @JoinColumn(name = "review_id")

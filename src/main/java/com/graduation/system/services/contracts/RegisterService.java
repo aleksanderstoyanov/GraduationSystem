@@ -8,5 +8,5 @@ public interface RegisterService {
     User findByEgn(String egn);
     User findByUsername(String username);
     void register(RegisterDTO registerDto) throws Exception;
-    void registerAdmin(RegisterDTO registerDto, Role role) throws Exception;
+    void registerWithRole(RegisterDTO registerDto, Role role) throws Exception;
 }
