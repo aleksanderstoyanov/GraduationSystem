@@ -17,6 +17,7 @@
                         <th scope="col"></th>
                         <th scope="col">Thesis Title</th>
                         <th scope="col">Thesis Text</th>
+                        <th scope="col">Has Review</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -25,7 +26,16 @@
                         <td><i class="fa-regular fa-file"></i></td>
                         <td th:text="${studentThesis.thesisTitle}"></td>
                         <td th:text="${studentThesis.thesisTitle}"></td>
-
+                        <td>
+                             <a  th:if="${studentThesis.review != null}"
+                                 th:href="@{'/reviews/details/' + ${studentThesis.review.getId()}}"
+                                 type="button"
+                                 class="btn btn-success">
+                                    See Review
+                                 <i class="fa-solid fa-glasses"></i>
+                             </a>
+                        <span th:unless="${studentThesis.review != null}">No Review</span>
+                        </td>
                         <td sec:authorize="hasAuthority('STUDENT')">
                             <a th:href="@{'/theses/edit/' + ${studentThesis.id}}" type="button" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a>
                             <a th:href="@{'/theses/delete/' + ${studentThesis.id}}" type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>

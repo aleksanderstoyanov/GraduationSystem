@@ -1,7 +1,6 @@
 package com.graduation.system.controllers;
 
 import com.graduation.system.dto.AdminEditDTO;
-import com.graduation.system.entity.User;
 import com.graduation.system.enums.FacultyType;
 import com.graduation.system.enums.Position;
 import com.graduation.system.enums.UserRole;

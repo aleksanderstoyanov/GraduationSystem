@@ -5,14 +5,17 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.graduation.system.messages.EntityMessages.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reviews")
 @Entity(name = "reviews")
@@ -20,9 +23,9 @@ public class Review extends BaseEntity {
 
     @Column(name = "submittedDate")
     @NotNull(message = CommonMessage.SubmittedDateNotNull)
-    private LocalDate submittedDate;
+    private LocalDate submittedDate = LocalDate.now();
 
-    @Column(name = "text", insertable = false, updatable = false)
+    @Column(name = "text")
     @NotNull(message = CommonMessage.TextNotNull)
     @Size(min = 10, max = 550, message = CommonMessage.TextLength)
     private String text;
@@ -32,6 +35,9 @@ public class Review extends BaseEntity {
     @Size(min = 10, max = 550, message = ReviewMessage.SummaryLength)
     private String summary;
 
-    @OneToOne(mappedBy = "review")
+    @Column(name = "granted")
+    private boolean granted = false;
+
+    @OneToOne(mappedBy = "review", cascade = CascadeType.DETACH, orphanRemoval = true)
     private Thesis thesis;
 }

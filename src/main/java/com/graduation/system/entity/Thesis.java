@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+
 import java.time.LocalDate;
 
 import static com.graduation.system.messages.EntityMessages.*;
@@ -32,7 +34,7 @@ public class Thesis extends BaseEntity {
 
     @Column(name = "submittedDate")
     @NotNull(message = CommonMessage.SubmittedDateNotNull)
-    private LocalDate submittedDate;
+    private LocalDate submittedDate = LocalDate.now();
 
     @OneToOne
     @JoinColumn(name = "application_id")

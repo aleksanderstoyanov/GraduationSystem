@@ -3,8 +3,10 @@ package com.graduation.system.services.impl;
 import com.graduation.system.dto.ThesisCreateDTO;
 import com.graduation.system.dto.ThesisEditDTO;
 import com.graduation.system.entity.Application;
+import com.graduation.system.entity.Review;
 import com.graduation.system.entity.Thesis;
 import com.graduation.system.entity.User;
+import com.graduation.system.enums.UserRole;
 import com.graduation.system.repository.ThesisRepository;
 import com.graduation.system.services.contracts.ApplicationService;
 import com.graduation.system.services.contracts.ThesisService;
@@ -43,6 +45,31 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
+    public void mapReview(Thesis thesis, Review review) {
+        thesis.setReview(review);
+        _repository.save(thesis);
+    }
+
+    @Override
+    public List<Thesis> getStudentThesesByFaculty(String email) {
+        User user = _userService.findByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException();
+        }
+
+
+        List<Thesis> theses = _repository.findAll()
+                .stream()
+                .filter(thesis -> thesis.getApplication() != null)
+                .filter(thesis -> thesis.getApplication().getStudent() != null)
+                .filter(thesis -> thesis.getApplication().getStudent().getUser().getFaculty() == user.getFaculty())
+                .collect(Collectors.toList());
+
+        return theses;
+    }
+
+    @Override
     public void createThesis(ThesisCreateDTO createDTO, Long applicationId) {
         Application application = _applicationService.getApplicationById(applicationId);
 
@@ -55,7 +82,6 @@ public class ThesisServiceImpl implements ThesisService {
         thesis.setText(createDTO.getThesisText());
         thesis.setTitle(createDTO.getThesisTitle());
         thesis.setApplication(application);
-        thesis.setSubmittedDate(LocalDate.now());
 
         _repository.save(thesis);
     }
