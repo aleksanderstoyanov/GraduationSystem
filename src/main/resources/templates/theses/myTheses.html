@@ -15,22 +15,20 @@
                     <thead>
                     <tr>
                         <th scope="col"></th>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Task</th>
-                        <th scope="col">Purpose</th>
+                        <th scope="col">Thesis Title</th>
+                        <th scope="col">Thesis Text</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="facultyApplication: ${facultyApplications}">
+                    <tr th:each="studentThesis: ${studentTheses}">
                         <td><i class="fa-regular fa-file"></i></td>
-                        <td th:text="${facultyApplication.subject}"></td>
-                        <td th:text="${facultyApplication.task}"></td>
-                        <td th:text="${facultyApplication.purpose}"></td>
-                        <td sec:authorize="hasAuthority('TEACHER')">
-                            <a th:href="@{'/teacher/headApplication/' + ${facultyApplication.id}}" type="button" class="btn btn-primary">Join +</a>
-                            <a th:href="@{'/teacher/approveApplication/' + ${facultyApplication.id}}" type="button" class="btn btn-success">Approve <i class="fa-solid fa-check"></i></a>
-                            <a th:href="@{'/teacher/disapproveApplication/' + ${facultyApplication.id}}" type="button" class="btn btn-danger">Disapprove<i class="fa-solid fa-x"></i></a>
+                        <td th:text="${studentThesis.thesisTitle}"></td>
+                        <td th:text="${studentThesis.thesisTitle}"></td>
+
+                        <td sec:authorize="hasAuthority('STUDENT')">
+                            <a th:href="@{'/theses/edit/' + ${studentThesis.id}}" type="button" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a>
+                            <a th:href="@{'/theses/delete/' + ${studentThesis.id}}" type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tbody>
                 </table>
@@ -38,11 +36,6 @@
         </div>
     </div>
     <style>
-        td > .fa-user{
-            display:flex;
-            justify-content:center;
-            margin: 7%;
-        }
         .table {
             overflow: scroll;
         }

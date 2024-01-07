@@ -5,6 +5,7 @@ import com.graduation.system.dto.ApplicationEditDTO;
 import com.graduation.system.entity.Application;
 import com.graduation.system.enums.UserRole;
 import com.graduation.system.services.impl.ApplicationServiceImpl;
+import com.graduation.system.model.ApplicationViewModel;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,18 @@ public class ApplicationsController {
         }
 
         String currentUserName = authentication.getName();
-        List<Application> myApplications = _applicationService.getStudentApplications(currentUserName);
+
+        List<ApplicationViewModel> myApplications = _applicationService
+                .getStudentApplications(currentUserName)
+                .stream()
+                .map(application -> new ApplicationViewModel(
+                        application.getId(),
+                        application.getSubject(),
+                        application.getTask(),
+                        application.getPurpose(),
+                        application.isApproved()
+                ))
+                .collect(Collectors.toList());
 
         model.addAttribute("message", "My Applications");
         model.addAttribute("applications", myApplications);

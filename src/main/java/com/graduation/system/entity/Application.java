@@ -47,4 +47,11 @@ public class Application extends BaseEntity {
     @JoinColumn(name = "teacher_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Teacher teacher;
+
+    @OneToOne(mappedBy = "application", cascade = CascadeType.DETACH, orphanRemoval = true)
+    public Thesis thesis;
+
+    public boolean isApproved() {
+        return approved;
+    }
 }
