@@ -2,7 +2,9 @@ package com.graduation.system.controllers;
 
 import com.graduation.system.dto.ThesisCreateDTO;
 import com.graduation.system.dto.ThesisEditDTO;
+import com.graduation.system.entity.Application;
 import com.graduation.system.enums.UserRole;
+import com.graduation.system.model.ReviewViewModel;
 import com.graduation.system.model.ThesisViewModel;
 import com.graduation.system.services.impl.ThesisServiceImpl;
 import jakarta.validation.Valid;
@@ -45,14 +47,50 @@ public class ThesesController {
                 .map(thesis -> new ThesisViewModel(
                         thesis.getId(),
                         thesis.getTitle(),
-                        thesis.getText()
+                        thesis.getText(),
+                        thesis.getReview() == null ? null : new ReviewViewModel(
+                                thesis.getReview().getId(),
+                                thesis.getReview().getText(),
+                                thesis.getReview().getSummary(),
+                                thesis.getReview().isGranted()
+                        )
                 ))
                 .collect(Collectors.toList());
+
 
         model.addAttribute("message", "My Theses");
         model.addAttribute("studentTheses", studentTheses);
 
         return "/theses/myTheses.html";
+    }
+
+    @GetMapping(value = "/theses/facultyTheses")
+    public String facultyTheses(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if((!isInRole(authentication, UserRole.TEACHER.name()) &&
+                (!isInRole(authentication, UserRole.STUDENT.name()))
+        )
+        ){
+            throw new IllegalArgumentException();
+        }
+
+        String currentUserName = authentication.getName();
+
+        List<ThesisViewModel> facultyTheses = _thesisService.getStudentThesesByFaculty(currentUserName)
+                .stream()
+                .map(thesis -> new ThesisViewModel(
+                        thesis.getId(),
+                        thesis.getTitle(),
+                        thesis.getText(),
+                        null
+                ))
+                .collect(Collectors.toList());
+
+        model.addAttribute("message", "Faculty Theses");
+        model.addAttribute("facultyTheses", facultyTheses);
+
+        return "/theses/facultyTheses.html";
     }
 
     @GetMapping(value = "/theses/create/{id}")
@@ -119,7 +157,7 @@ public class ThesesController {
 
     @PostMapping(value = "/theses/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @Valid @ModelAttribute ThesisEditDTO editDTO,
+                       @Valid @ModelAttribute("thesis") ThesisEditDTO editDTO,
                        BindingResult bindingResult,
                        Model model) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -129,8 +167,9 @@ public class ThesesController {
         }
 
         if (bindingResult.hasErrors()){
+            editDTO.setApplicationId(id);
             model.addAttribute("thesis", editDTO);
-            return "/theses/edit/"+id;
+            return "/theses/edit.html";
         }
 
         _thesisService.updateThesis(editDTO, id);

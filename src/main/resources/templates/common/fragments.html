@@ -25,6 +25,9 @@
             <li class="nav-item" sec:authorize="hasAuthority('STUDENT')">
                 <a class="nav-link" th:href="@{/theses/myTheses}">My Theses</a>
             </li>
+            <li class="nav-item" sec:authorize="hasAnyAuthority('STUDENT', 'TEACHER')">
+                <a class="nav-link" th:href="@{/theses/facultyTheses}">Faculty Theses</a>
+            </li>
             <li class="nav-item" sec:authorize="hasAuthority('TEACHER')">
                 <a class="nav-link" th:href="@{/applications/facultyApplications}">Faculty Applications</a>
             </li>

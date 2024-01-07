@@ -5,17 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ThesisViewModel {
+@Getter
+@Setter
+public class ReviewViewModel {
 
     private Long id;
-
-    private String thesisTitle;
-
-    private String thesisText;
-
-    private ReviewViewModel review;
+    private String text;
+    private String summary;
+    private boolean isGranted;
 }

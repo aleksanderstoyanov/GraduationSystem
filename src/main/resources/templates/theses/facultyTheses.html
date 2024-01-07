@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head th:replace="common/fragments :: head">
 </head>
 <body>
@@ -15,25 +15,18 @@
           <thead>
           <tr>
             <th scope="col"></th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Faculty</th>
-            <th scope="col">Role</th>
+            <th scope="col">Thesis Title</th>
+            <th scope="col">Thesis Text</th>
             <th scope="col"></th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="user: ${users}">
-            <td><i class="fa-regular fa-user"></i></td>
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td th:text="${user.email}"></td>
-            <td th:text="${user.faculty}"></td>
-            <td th:text="${user.role}"></td>
-            <td>
-              <a th:href="@{'/admin/edit/' + ${user.id}}" type="button" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a>
-              <a th:href="@{'/admin/delete/' + ${user.id}}" type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+          <tr th:each="facultyThesis: ${facultyTheses}">
+            <td><i class="fa-regular fa-file"></i></td>
+            <td th:text="${facultyThesis.thesisTitle}"></td>
+            <td th:text="${facultyThesis.thesisText}"></td>
+            <td sec:authorize="hasAuthority('TEACHER')">
+              <a th:href="@{'/reviews/create/' + ${facultyThesis.id}}" type="button" class="btn btn-primary">Add Review +</a>
             </td>
           </tbody>
         </table>
@@ -41,11 +34,6 @@
     </div>
   </div>
   <style>
-        td > .fa-user{
-            display:flex;
-            justify-content:center;
-            margin: 7%;
-        }
         .table {
             overflow: scroll;
         }
