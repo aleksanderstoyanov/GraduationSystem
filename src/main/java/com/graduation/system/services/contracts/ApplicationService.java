@@ -1,19 +1,18 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.ApplicationCreateDTO;
-import com.graduation.system.dto.ApplicationEditDTO;
+import com.graduation.system.dto.ApplicationDTO;
 import com.graduation.system.entity.Application;
 
 import java.util.List;
 
 public interface ApplicationService {
 
-    void createStudentApplication(ApplicationCreateDTO applicationCreateDTO, String username);
-    void updateApplication(Application application);
-    void updateStudentApplication(ApplicationEditDTO applicationEditDTO, Long id);
+    void createStudentApplication(ApplicationDTO dto, String username);
+    void updateApplication(ApplicationDTO dto);
+    void updateStudentApplication(ApplicationDTO dto, Long id);
     void deleteStudentApplication(Long id);
-    Application getApplicationById(Long id);
-    List<Application> getStudentApplicationsByFaculty(String email);
-    List<Application> getStudentApplications(String email);
+    ApplicationDTO getApplicationById(Long id);
+    List<ApplicationDTO> getStudentApplicationsByFaculty(String email);
+    List<ApplicationDTO> getStudentApplications(String email);
 
 }

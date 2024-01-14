@@ -16,25 +16,25 @@
                     <div class="mb-3">
                         <label class="form-label">Thesis Title</label>
                         <input type="text"
-                               th:field="*{thesisTitle}"
+                               th:field="*{title}"
                                class="form-control"
-                               id="thesisTitle"
+                               id="title"
                                placeholder="Short title for the subject matter" />
-                        <p th:errors = "*{thesisTitle}"
+                        <p th:errors = "*{title}"
                            class="text-danger"
-                           th:if="${#fields.hasErrors('thesisTitle')}">
+                           th:if="${#fields.hasErrors('title')}">
                         </p>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Thesis Text</label>
-                        <textarea th:field="*{thesisText}"
+                        <textarea th:field="*{text}"
                                   class="form-control"
-                                  id="thesisText"
+                                  id="text"
                                   rows="3">
                         </textarea>
-                        <p th:errors = "*{thesisText}"
+                        <p th:errors = "*{text}"
                            class="text-danger"
-                           th:if="${#fields.hasErrors('thesisText')}">
+                           th:if="${#fields.hasErrors('text')}">
                         </p>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit Thesis</button>

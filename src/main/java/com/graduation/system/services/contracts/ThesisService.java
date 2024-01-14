@@ -1,18 +1,16 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.ThesisCreateDTO;
-import com.graduation.system.dto.ThesisEditDTO;
-import com.graduation.system.entity.Review;
-import com.graduation.system.entity.Thesis;
+import com.graduation.system.dto.ReviewDTO;
+import com.graduation.system.dto.ThesisDTO;
 
 import java.util.List;
 
 public interface ThesisService {
-    List<Thesis> getStudentTheses(String email);
-    void mapReview(Thesis thesis, Review review);
-    List<Thesis> getStudentThesesByFaculty(String email);
-    void createThesis(ThesisCreateDTO createDTO, Long applicationId);
-    void updateThesis(ThesisEditDTO editDTO, Long id);
+    List<ThesisDTO> getStudentTheses(String email);
+    void mapReview(ThesisDTO thesis, ReviewDTO review);
+    List<ThesisDTO> getStudentThesesByFaculty(String email);
+    void createThesis(ThesisDTO createDTO, Long applicationId);
+    void updateThesis(ThesisDTO editDTO, Long id);
     void deleteThesis(Long id);
-    Thesis getStudentThesisById(Long id);
+    ThesisDTO getStudentThesisById(Long id);
 }

@@ -1,4 +1,4 @@
-package com.graduation.system.dto;
+package com.graduation.system.viewmodels;
 
 import com.graduation.system.messages.EntityMessages;
 import jakarta.validation.constraints.NotNull;
@@ -12,13 +12,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationCreateDTO {
+public class ApplicationEditViewModel {
+    private Long id;
+
     @NotNull(message = EntityMessages.ApplicationMessage.SubjectNotNull)
     @Size(min = 5, max = 30, message = EntityMessages.ApplicationMessage.SubjectLength)
     private String subject;
 
     @NotNull(message = EntityMessages.ApplicationMessage.TaskNotNull)
-    @Size(min = 5, max = 30, message = EntityMessages.ApplicationMessage.TaskLength)
+    @Size(min = 5, max = 30)
     private String task;
 
     @NotNull(message = EntityMessages.ApplicationMessage.PurposeNotNull)
