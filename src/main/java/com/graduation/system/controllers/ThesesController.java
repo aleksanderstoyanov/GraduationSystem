@@ -1,11 +1,11 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.ThesisCreateDTO;
-import com.graduation.system.dto.ThesisEditDTO;
-import com.graduation.system.entity.Application;
+import com.graduation.system.dto.ThesisDTO;
 import com.graduation.system.enums.UserRole;
-import com.graduation.system.model.ReviewViewModel;
-import com.graduation.system.model.ThesisViewModel;
+import com.graduation.system.mapping.ThesisModelMapper;
+import com.graduation.system.viewmodels.ThesisCreateViewModel;
+import com.graduation.system.viewmodels.ThesisEditViewModel;
+import com.graduation.system.viewmodels.ThesisViewModel;
 import com.graduation.system.services.impl.ThesisServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 public class ThesesController {
 
     @Autowired
+    private ThesisModelMapper _thesisMapper;
+    @Autowired
     private ThesisServiceImpl _thesisService;
 
     @GetMapping(value = "/theses/myTheses")
@@ -44,19 +46,10 @@ public class ThesesController {
         List<ThesisViewModel> studentTheses = _thesisService
                 .getStudentTheses(currentUsername)
                 .stream()
-                .map(thesis -> new ThesisViewModel(
-                        thesis.getId(),
-                        thesis.getTitle(),
-                        thesis.getText(),
-                        thesis.getReview() == null ? null : new ReviewViewModel(
-                                thesis.getReview().getId(),
-                                thesis.getReview().getText(),
-                                thesis.getReview().getSummary(),
-                                thesis.getReview().isGranted()
-                        )
-                ))
+                .map(thesis -> (ThesisViewModel)_thesisMapper
+                        .mapToModel(thesis, ThesisViewModel.class)
+                )
                 .collect(Collectors.toList());
-
 
         model.addAttribute("message", "My Theses");
         model.addAttribute("studentTheses", studentTheses);
@@ -79,12 +72,7 @@ public class ThesesController {
 
         List<ThesisViewModel> facultyTheses = _thesisService.getStudentThesesByFaculty(currentUserName)
                 .stream()
-                .map(thesis -> new ThesisViewModel(
-                        thesis.getId(),
-                        thesis.getTitle(),
-                        thesis.getText(),
-                        null
-                ))
+                .map(thesis -> (ThesisViewModel)_thesisMapper.mapToModel(thesis, ThesisViewModel.class))
                 .collect(Collectors.toList());
 
         model.addAttribute("message", "Faculty Theses");
@@ -101,17 +89,17 @@ public class ThesesController {
             throw new IllegalAccessException();
         }
 
+        ThesisCreateViewModel viewModel = new ThesisCreateViewModel();
+        viewModel.setApplicationId(id);
 
-        ThesisCreateDTO createDTO = new ThesisCreateDTO();
-        createDTO.setApplicationId(id);
-        model.addAttribute("thesis", createDTO);
+        model.addAttribute("thesis", viewModel);
 
         return "/theses/create.html";
     }
 
     @PostMapping(value = "/theses/create/{id}")
     public String create(@PathVariable Long id,
-                         @Valid @ModelAttribute ThesisCreateDTO createDTO,
+                         @Valid @ModelAttribute("thesis") ThesisCreateViewModel viewModel,
                          BindingResult bindingResult,
                          Model model) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -120,7 +108,13 @@ public class ThesesController {
             throw new IllegalAccessException();
         }
 
-        _thesisService.createThesis(createDTO, id);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("thesis", viewModel);
+            viewModel.setApplicationId(id);
+            return "/theses/create.html";
+        }
+
+        _thesisService.createThesis((ThesisDTO) _thesisMapper.mapToModel(viewModel, ThesisDTO.class), id);
 
         return "redirect:/theses/myTheses";
     }
@@ -134,22 +128,20 @@ public class ThesesController {
         }
 
 
-        ThesisEditDTO editDTO =
+        ThesisEditViewModel viewModel =
                 Arrays.asList(_thesisService.getStudentThesisById(id))
                         .stream()
-                        .map(thesis -> new ThesisEditDTO(
-                                thesis.getId(),
-                                thesis.getTitle(),
-                                thesis.getText()
-                        ))
+                        .map(thesis -> (ThesisEditViewModel) _thesisMapper
+                                .mapToModel(thesis, ThesisEditViewModel.class)
+                        )
                         .collect(Collectors.toList())
                         .get(0);
 
-        if (editDTO == null){
+        if (viewModel == null){
             throw new IllegalArgumentException();
         }
 
-        model.addAttribute("thesis", editDTO);
+        model.addAttribute("thesis", viewModel);
 
         return "/theses/edit.html";
     }
@@ -157,7 +149,7 @@ public class ThesesController {
 
     @PostMapping(value = "/theses/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @Valid @ModelAttribute("thesis") ThesisEditDTO editDTO,
+                       @Valid @ModelAttribute("thesis") ThesisEditViewModel dto,
                        BindingResult bindingResult,
                        Model model) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -167,12 +159,12 @@ public class ThesesController {
         }
 
         if (bindingResult.hasErrors()){
-            editDTO.setApplicationId(id);
-            model.addAttribute("thesis", editDTO);
+            dto.setApplicationId(id);
+            model.addAttribute("thesis", dto);
             return "/theses/edit.html";
         }
 
-        _thesisService.updateThesis(editDTO, id);
+        _thesisService.updateThesis((ThesisDTO) _thesisMapper.mapToModel(dto, ThesisDTO.class), id);
 
         return "redirect:/theses/myTheses";
     }

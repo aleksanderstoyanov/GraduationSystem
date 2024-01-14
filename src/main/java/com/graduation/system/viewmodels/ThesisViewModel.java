@@ -1,4 +1,4 @@
-package com.graduation.system.model;
+package com.graduation.system.viewmodels;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +13,9 @@ public class ThesisViewModel {
 
     private Long id;
 
-    private String thesisTitle;
+    private String title;
 
-    private String thesisText;
+    private String text;
 
     private ReviewViewModel review;
 }

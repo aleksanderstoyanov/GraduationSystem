@@ -1,10 +1,12 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.AdminEditDTO;
+import com.graduation.system.dto.UserDTO;
 import com.graduation.system.enums.FacultyType;
 import com.graduation.system.enums.Position;
 import com.graduation.system.enums.UserRole;
-import com.graduation.system.model.UserViewModel;
+import com.graduation.system.mapping.UserModelMapper;
+import com.graduation.system.viewmodels.UserEditViewModel;
+import com.graduation.system.viewmodels.UserViewModel;
 import com.graduation.system.services.impl.AdminServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,41 +26,30 @@ import java.util.stream.Collectors;
 @Controller
 @AllArgsConstructor
 public class AdminController {
-
+    @Autowired
+    private UserModelMapper _userMapper;
     @Autowired
     private AdminServiceImpl _adminService;
 
     @GetMapping(value = "/admin/users")
     public String users(Model model){
-        List<UserViewModel> users = _adminService.findAllUsers()
-                .stream().map(user -> new UserViewModel(
-                        user.getId(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail(),
-                        user.getFaculty(),
-                        user.getRoles().get(0).getRole().name()
-                )).collect(Collectors.toList());
-
+        List<UserViewModel> viewModels = _adminService.findAllUsers()
+                .stream()
+                .map(user -> _userMapper.mapToUserViewModel(user))
+                .collect(Collectors.toList());
 
         model.addAttribute("message", "All Users");
-        model.addAttribute("users", users);
+        model.addAttribute("users", viewModels);
 
         return "/admin/users.html";
     }
 
     @GetMapping(value = "/admin/edit/{id}")
     public String edit(@PathVariable Long id, Model model){
-        AdminEditDTO editDTO = Arrays.asList(_adminService.findById(id))
-                .stream().map(user -> new AdminEditDTO(
-                        user.getEmail(),
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEgn(),
-                        null,
-                        user.getFaculty(),
-                        user.getRoles().get(0).getRole().name()
-                )).collect(Collectors.toList()).get(0);
+
+        UserDTO user = _adminService.findById(id);
+        UserEditViewModel viewModel = _userMapper
+                    .mapToUserEditViewModel(user);
 
         List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
         model.addAttribute("faculties", faculties);
@@ -70,14 +61,14 @@ public class AdminController {
         List<Position> positions = Arrays.stream(Position.values()).toList();
         model.addAttribute("positions", positions);
 
-        model.addAttribute("user", editDTO);
+        model.addAttribute("user", viewModel);
 
         return "admin/edit.html";
     }
 
     @PostMapping(value = "/admin/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @Valid @ModelAttribute AdminEditDTO editDTO,
+                       @Valid @ModelAttribute("user") UserEditViewModel editDTO,
                        BindingResult bindingResult,
                        Model model) throws Exception{
         if (bindingResult.hasErrors()){
@@ -95,7 +86,7 @@ public class AdminController {
             return "admin/edit.html";
         }
 
-        _adminService.updateUser(editDTO);
+        _adminService.updateUser((UserDTO) _userMapper.mapToModel(editDTO, UserDTO.class));
         return "redirect:/admin/users";
     }
 

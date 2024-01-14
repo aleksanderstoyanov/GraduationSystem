@@ -5,6 +5,7 @@ import com.graduation.system.entity.Faculty;
 import com.graduation.system.entity.Student;
 import com.graduation.system.entity.User;
 import com.graduation.system.repository.StudentRepository;
+import com.graduation.system.services.contracts.StudentService;
 import com.graduation.system.services.impl.FacultyServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.Random;
 
 @AllArgsConstructor
 @Service
-public class StudentServiceImpl {
+public class StudentServiceImpl implements StudentService {
     @Autowired
     private FacultyServiceImpl _facultyService;
     private StudentRepository _repository;

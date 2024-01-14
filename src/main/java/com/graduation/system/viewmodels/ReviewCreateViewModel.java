@@ -1,9 +1,6 @@
-package com.graduation.system.dto;
+package com.graduation.system.viewmodels;
 
-import com.graduation.system.entity.Thesis;
 import com.graduation.system.messages.EntityMessages;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateReviewDTO {
+public class ReviewCreateViewModel {
 
     private Long thesisId;
 
@@ -29,5 +26,4 @@ public class CreateReviewDTO {
 
     @NotNull
     private boolean granted;
-
 }

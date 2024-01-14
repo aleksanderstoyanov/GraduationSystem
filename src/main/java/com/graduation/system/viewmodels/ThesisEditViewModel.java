@@ -1,7 +1,6 @@
-package com.graduation.system.dto;
+package com.graduation.system.viewmodels;
 
 import com.graduation.system.messages.EntityMessages;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -9,19 +8,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class ThesisCreateDTO {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class ThesisEditViewModel {
     private Long applicationId;
 
     @NotNull(message = EntityMessages.CommonMessage.TitleNotNull)
     @Size(min = 10, max = 550, message = EntityMessages.CommonMessage.TitleLength)
-    private String thesisTitle;
+    private String title;
 
     @NotNull(message = EntityMessages.CommonMessage.TextNotNull)
     @Size(min = 10, max = 550, message = EntityMessages.CommonMessage.TextLength)
-    private String thesisText;
+    private String text;
 }

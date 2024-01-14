@@ -1,8 +1,10 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.CreateReviewDTO;
+import com.graduation.system.dto.ReviewDTO;
 import com.graduation.system.enums.UserRole;
-import com.graduation.system.model.ReviewViewModel;
+import com.graduation.system.mapping.ReviewModelMapper;
+import com.graduation.system.viewmodels.ReviewCreateViewModel;
+import com.graduation.system.viewmodels.ReviewViewModel;
 import com.graduation.system.services.impl.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,9 @@ import java.util.stream.Collectors;
 @Controller
 @AllArgsConstructor
 public class ReviewsController {
+
+    @Autowired
+    private ReviewModelMapper _reviewMapper;
     @Autowired
     private ReviewServiceImpl _reviewService;
 
@@ -63,17 +68,17 @@ public class ReviewsController {
             throw new IllegalAccessException();
         }
 
-        CreateReviewDTO createReviewDTO = new CreateReviewDTO();
-        createReviewDTO.setThesisId(id);
+        ReviewCreateViewModel viewModel = new ReviewCreateViewModel();
+        viewModel.setThesisId(id);
 
-        model.addAttribute("review", createReviewDTO);
+        model.addAttribute("review", viewModel);
 
         return "/reviews/create.html";
     }
 
     @PostMapping(value = "/reviews/create/{id}")
     public String create(@PathVariable Long id,
-                         @Valid @ModelAttribute("review") CreateReviewDTO createDTO,
+                         @Valid @ModelAttribute("review") ReviewCreateViewModel viewModel,
                          BindingResult bindingResult,
                          Model model) throws IllegalAccessException {
 
@@ -85,12 +90,12 @@ public class ReviewsController {
 
 
         if (bindingResult.hasErrors()){
-            createDTO.setThesisId(id);
-            model.addAttribute("review", createDTO);
+            viewModel.setThesisId(id);
+            model.addAttribute("review", viewModel);
             return "/reviews/create.html";
         }
 
-        _reviewService.createReview(createDTO, id);
+        _reviewService.createReview((ReviewDTO) _reviewMapper.mapToModel(viewModel, ReviewDTO.class), id);
 
         return "redirect:/theses/facultyTheses";
     }

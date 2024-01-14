@@ -24,8 +24,8 @@
                     <tbody>
                     <tr th:each="studentThesis: ${studentTheses}">
                         <td><i class="fa-regular fa-file"></i></td>
-                        <td th:text="${studentThesis.thesisTitle}"></td>
-                        <td th:text="${studentThesis.thesisTitle}"></td>
+                        <td th:text="${studentThesis.title}"></td>
+                        <td th:text="${studentThesis.text}"></td>
                         <td>
                              <a  th:if="${studentThesis.review != null}"
                                  th:href="@{'/reviews/details/' + ${studentThesis.review.getId()}}"

@@ -1,4 +1,4 @@
-package com.graduation.system.model;
+package com.graduation.system.viewmodels;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

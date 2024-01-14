@@ -1,14 +1,13 @@
 package com.graduation.system.services.contracts;
 
 
-import com.graduation.system.dto.AdminEditDTO;
-import com.graduation.system.entity.User;
+import com.graduation.system.dto.UserDTO;
 
 import java.util.List;
 
 public interface AdminService {
     void deleteUser(Long id) throws Exception;
-    void updateUser(AdminEditDTO editDTO) throws Exception;
-    User findById(Long id);
-    List<User> findAllUsers();
+    void updateUser(UserDTO editDTO) throws Exception;
+    UserDTO findById(Long id);
+    List<UserDTO> findAllUsers();
 }

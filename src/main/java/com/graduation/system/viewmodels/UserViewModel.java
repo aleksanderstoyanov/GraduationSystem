@@ -1,11 +1,13 @@
-package com.graduation.system.model;
+package com.graduation.system.viewmodels;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserViewModel {
 
@@ -18,6 +20,10 @@ public class UserViewModel {
     private String email;
 
     private String faculty;
-
     private String role;
+    public String getRole() {
+        return role
+                .replace('[', ' ')
+                .replace(']', ' ');
+    }
 }

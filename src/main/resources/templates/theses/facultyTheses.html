@@ -23,8 +23,8 @@
           <tbody>
           <tr th:each="facultyThesis: ${facultyTheses}">
             <td><i class="fa-regular fa-file"></i></td>
-            <td th:text="${facultyThesis.thesisTitle}"></td>
-            <td th:text="${facultyThesis.thesisText}"></td>
+            <td th:text="${facultyThesis.title}"></td>
+            <td th:text="${facultyThesis.text}"></td>
             <td sec:authorize="hasAuthority('TEACHER')">
               <a th:href="@{'/reviews/create/' + ${facultyThesis.id}}" type="button" class="btn btn-primary">Add Review +</a>
             </td>

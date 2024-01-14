@@ -1,11 +1,13 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.ApplicationCreateDTO;
-import com.graduation.system.dto.ApplicationEditDTO;
-import com.graduation.system.entity.Application;
+import com.graduation.system.dto.ApplicationDTO;
 import com.graduation.system.enums.UserRole;
+import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.services.impl.ApplicationServiceImpl;
-import com.graduation.system.model.ApplicationViewModel;
+import com.graduation.system.viewmodels.ApplicationCreateViewModel;
+import com.graduation.system.viewmodels.ApplicationEditViewModel;
+import com.graduation.system.viewmodels.ApplicationViewModel;
+import com.graduation.system.viewmodels.UserViewModel;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ import java.util.stream.Collectors;
 @Controller
 @AllArgsConstructor
 public class ApplicationsController {
+
+    @Autowired
+    private ApplicationModelMapper _applicationMapper;
     @Autowired
     private ApplicationServiceImpl _applicationService;
 
@@ -38,9 +43,9 @@ public class ApplicationsController {
             throw new IllegalArgumentException();
         }
 
-        ApplicationCreateDTO createDTO = new ApplicationCreateDTO();
+        ApplicationCreateViewModel viewModel = new ApplicationCreateViewModel();
 
-        model.addAttribute("application", createDTO);
+        model.addAttribute("application", viewModel);
 
         return "/applications/create.html";
     }
@@ -58,13 +63,9 @@ public class ApplicationsController {
         List<ApplicationViewModel> myApplications = _applicationService
                 .getStudentApplications(currentUserName)
                 .stream()
-                .map(application -> new ApplicationViewModel(
-                        application.getId(),
-                        application.getSubject(),
-                        application.getTask(),
-                        application.getPurpose(),
-                        application.isApproved()
-                ))
+                .map(application -> (ApplicationViewModel)_applicationMapper
+                        .mapToModel(application, ApplicationViewModel.class)
+                )
                 .collect(Collectors.toList());
 
         model.addAttribute("message", "My Applications");
@@ -86,16 +87,22 @@ public class ApplicationsController {
 
         String currentUserName = authentication.getName();
 
-        List<Application> facultyApplications = _applicationService.getStudentApplicationsByFaculty(currentUserName);
+        List<ApplicationViewModel> viewModels = _applicationService
+                .getStudentApplicationsByFaculty(currentUserName)
+                .stream()
+                .map(application -> (ApplicationViewModel) _applicationMapper
+                        .mapToModel(application, ApplicationViewModel.class)
+                )
+                .collect(Collectors.toList());
 
         model.addAttribute("message", "Student Applications");
-        model.addAttribute("facultyApplications", facultyApplications);
+        model.addAttribute("facultyApplications", viewModels);
 
         return "/applications/facultyApplications.html";
     }
 
     @PostMapping(value = "/applications/create")
-    public String create(@Valid @ModelAttribute("application") ApplicationCreateDTO createDTO,
+    public String create(@Valid @ModelAttribute("application") ApplicationDTO viewModel,
                          BindingResult bindingResult,
                          Model model)
     {
@@ -106,12 +113,12 @@ public class ApplicationsController {
         }
 
         if(bindingResult.hasErrors()){
-            model.addAttribute("application", createDTO);
+            model.addAttribute("application", viewModel);
             return "/applications/create.html";
         }
 
         String currentUserName = authentication.getName();
-        _applicationService.createStudentApplication(createDTO, currentUserName);
+        _applicationService.createStudentApplication(viewModel, currentUserName);
 
         return "redirect:/applications/myApplications";
     }
@@ -124,13 +131,10 @@ public class ApplicationsController {
             throw new IllegalArgumentException();
         }
 
-        ApplicationEditDTO applicationDTO = Arrays.asList(_applicationService.getApplicationById(id))
-                .stream().map(application -> new ApplicationEditDTO(
-                        application.getId(),
-                        application.getSubject(),
-                        application.getTask(),
-                        application.getPurpose())
-                ).collect(Collectors.toList())
+        ApplicationEditViewModel applicationDTO = Arrays.asList(_applicationService.getApplicationById(id))
+                .stream()
+                .map(application -> (ApplicationEditViewModel)_applicationMapper.mapToModel(application, ApplicationEditViewModel.class))
+                .toList()
                 .get(0);
 
         if (applicationDTO == null){
@@ -144,7 +148,7 @@ public class ApplicationsController {
 
     @PostMapping(value = "/applications/edit/{id}")
     public String edit(@PathVariable Long id,
-                       @Valid @ModelAttribute("applicationRecord") ApplicationEditDTO editDTO,
+                       @Valid @ModelAttribute("applicationRecord") ApplicationEditViewModel editDTO,
                        BindingResult bindingResult,
                        Model model) throws Exception
     {
@@ -159,7 +163,8 @@ public class ApplicationsController {
             return "/applications/edit.html";
         }
 
-       _applicationService.updateStudentApplication(editDTO, id);
+       _applicationService.updateStudentApplication((ApplicationDTO) _applicationMapper
+                       .mapToModel(editDTO, ApplicationDTO.class), id);
 
         return "redirect:/applications/myApplications";
     }

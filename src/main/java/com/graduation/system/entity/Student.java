@@ -34,7 +34,7 @@ public class Student extends BaseEntity {
     @Size(min = 10, max = 10, message = "EGN should be exactly 10 symbols")
     private String egn;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", orphanRemoval = true)
     private List<Application> applications;
 
     @OneToMany(

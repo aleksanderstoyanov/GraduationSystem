@@ -1,4 +1,5 @@
-package com.graduation.system.model;
+package com.graduation.system.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,15 +10,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationViewModel {
-
+public class ReviewDTO {
     private Long id;
-
-    private String subject;
-
-    private String task;
-
-    private String purpose;
-
-    private boolean approved;
+    private String text;
+    private String summary;
+    private boolean granted;
 }
