@@ -10,8 +10,10 @@ import com.graduation.system.data.enums.Position;
 import com.graduation.system.data.repository.UserRepository;
 import com.graduation.system.mapping.UserModelMapper;
 import com.graduation.system.services.contracts.AdminService;
+import com.graduation.system.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import static com.graduation.system.messages.ErrorMessages.UserErrorMessages;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private StudentServiceImpl _studentService;
-
     private CustomUserDetailsServiceImpl _userService;
     private final UserModelMapper _userMapper;
     private RoleServiceImpl _roleService;
@@ -49,11 +50,8 @@ public class AdminServiceImpl implements AdminService {
     }
     private void updateStudent(UserDTO editDTO) throws Exception{
 
-        User user = _repository.findByEgn(editDTO.getEgn());
-
-        if(user == null){
-            throw new IllegalArgumentException();
-        }
+        User user = _repository.findByEgn(editDTO.getEgn())
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
 
         Student student = new Student();
 
@@ -70,10 +68,6 @@ public class AdminServiceImpl implements AdminService {
     private void updateTeacher(UserDTO editDTO) throws Exception{
 
         UserDTO user = _userService.findByEmail(editDTO.getEmail());
-
-        if(user == null){
-            throw new IllegalArgumentException();
-        }
 
         TeacherDTO teacher = new TeacherDTO();
 
@@ -96,12 +90,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updateUser(UserDTO editDTO) throws Exception{
 
-        User user = _repository.findByEgn(editDTO.getEgn());
-
-        if(user == null){
-            throw new IllegalArgumentException();
-        }
-
+        User user = _repository.findByEgn(editDTO.getEgn())
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
 
         String userRole = user.getRoles().get(0).getRole().name();
 
@@ -147,7 +137,7 @@ public class AdminServiceImpl implements AdminService {
         return _userMapper
                 .mapToUserDTO(_repository
                         .findById(id)
-                        .get()
+                        .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound))
                 );
     }
 
@@ -162,12 +152,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void deleteUser(Long id) throws Exception {
+
         User user = (User) _userMapper
                 .mapToModel(findById(id), User.class);
-
-        if (user == null){
-            throw new IllegalArgumentException();
-        }
 
         _repository.delete(user);
     }

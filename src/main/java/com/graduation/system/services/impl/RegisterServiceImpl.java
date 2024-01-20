@@ -6,11 +6,15 @@ import com.graduation.system.data.entity.Faculty;
 import com.graduation.system.data.entity.Role;
 import com.graduation.system.data.entity.User;
 import com.graduation.system.data.repository.UserRepository;
+import com.graduation.system.exceptions.UserAlreadyExistsException;
 import com.graduation.system.services.contracts.RegisterService;
+import com.graduation.system.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static com.graduation.system.messages.ErrorMessages.UserErrorMessages;
 
 import java.util.Arrays;
 
@@ -31,12 +35,14 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public User findByEgn(String egn){
-        return _repository.findByEgn(egn);
+        return _repository.findByEgn(egn)
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
     }
 
     @Override
     public User findByUsername(String username){
-        return _repository.findByUsername(username);
+        return _repository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
     }
 
     @Override
@@ -70,7 +76,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public void registerWithRole(RegisterDTO registerDto, Role role) throws Exception{
         if (_repository.findByUsername(registerDto.getUsername()) != null){
-            return;
+            throw new UserAlreadyExistsException(UserErrorMessages.UserAlreadyExists);
         }
         else{
             User user = new User();

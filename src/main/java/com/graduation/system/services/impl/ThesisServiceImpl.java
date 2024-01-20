@@ -8,12 +8,15 @@ import com.graduation.system.data.entity.Application;
 import com.graduation.system.data.entity.Review;
 import com.graduation.system.data.entity.Thesis;
 import com.graduation.system.data.repository.ThesisRepository;
+import com.graduation.system.exceptions.ThesisNotFoundException;
 import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.mapping.ThesisModelMapper;
 import com.graduation.system.services.contracts.ThesisService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.graduation.system.messages.ErrorMessages.ThesisErrorMessages;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +40,6 @@ public class ThesisServiceImpl implements ThesisService {
     @Override
     public List<ThesisDTO> getStudentTheses(String email) {
         UserDTO user = _userService.findByEmail(email);
-
-        if (user == null){
-            throw new IllegalArgumentException();
-        }
 
         return _repository.findAll()
                 .stream()
@@ -66,10 +65,6 @@ public class ThesisServiceImpl implements ThesisService {
     public List<ThesisDTO> getStudentThesesByFaculty(String email) {
         UserDTO user = _userService.findByEmail(email);
 
-        if (user == null) {
-            throw new IllegalArgumentException();
-        }
-
         return _repository.findAll()
                 .stream()
                 .filter(thesis -> thesis.getApplication() != null)
@@ -82,10 +77,6 @@ public class ThesisServiceImpl implements ThesisService {
     @Override
     public void createThesis(ThesisDTO createDTO, Long applicationId) {
         ApplicationDTO application = _applicationService.getApplicationById(applicationId);
-
-        if (application == null) {
-            throw new IllegalArgumentException();
-        }
 
         Thesis thesis = new Thesis();
 
@@ -101,10 +92,6 @@ public class ThesisServiceImpl implements ThesisService {
     public void updateThesis(ThesisDTO editDTO, Long id) {
         ThesisDTO thesis = getStudentThesisById(id);
 
-        if(thesis == null){
-            throw new IllegalArgumentException();
-        }
-
         thesis.setText(editDTO.getText());
         thesis.setTitle(editDTO.getTitle());
 
@@ -115,18 +102,19 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public void deleteThesis(Long id) {
-        Thesis thesis = _repository.findById(id).get();
-
-        if(thesis == null){
-            throw new IllegalArgumentException();
-        }
+        Thesis thesis = _repository.findById(id)
+                .orElseThrow(() -> new ThesisNotFoundException(ThesisErrorMessages.ThesisNotFound));
 
         _repository.delete(thesis);
     }
 
     @Override
     public ThesisDTO getStudentThesisById(Long id) {
+
+        Thesis thesis = _repository.findById(id)
+                .orElseThrow(() -> new ThesisNotFoundException(ThesisErrorMessages.ThesisNotFound));
+
         return (ThesisDTO) _mapper
-                .mapToModel(_repository.findById(id).get(), ThesisDTO.class);
+                .mapToModel(thesis, ThesisDTO.class);
     }
 }

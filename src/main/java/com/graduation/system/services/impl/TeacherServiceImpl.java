@@ -63,16 +63,8 @@ public class TeacherServiceImpl implements TeacherService {
     public void approveApplication (Long id, String email) {
         UserDTO user = _userService.findByEmail(email);
 
-        if (user == null) {
-            throw new IllegalArgumentException();
-        }
-
         TeacherDTO teacher = user.getTeacherDTO();
         ApplicationDTO application = _applicationService.getApplicationById(id);
-
-        if (teacher == null || application == null){
-            throw new IllegalArgumentException();
-        }
 
         application.setApproved(true);
         _applicationService.updateApplication((ApplicationDTO) _applicationMapper
@@ -83,10 +75,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void disapproveApplication (Long id, String email) {
         UserDTO user = _userService.findByEmail(email);
-
-        if (user == null) {
-            throw new IllegalArgumentException();
-        }
 
         TeacherDTO teacher = user.getTeacherDTO();
         ApplicationDTO application = _applicationService.getApplicationById(id);

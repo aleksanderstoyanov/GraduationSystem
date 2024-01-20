@@ -15,10 +15,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.graduation.system.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import static com.graduation.system.messages.ErrorMessages.UserErrorMessages;
 
 
 @Service
@@ -30,15 +33,12 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService, UserSer
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
 
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
-        } else {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
+        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+                user.getPassword(),
+                mapRolesToAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -51,18 +51,22 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService, UserSer
     @Override
     public UserDTO findByEmail(String email) {
 
-        UserDTO userDTO = _userMapper.mapToUserDTO(userRepository.findByEmail(email));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(UserErrorMessages.UserNotFound));
+
+        UserDTO userDTO = _userMapper.mapToUserDTO(user);
 
         StudentDTO studentDTO;
-        if (userRepository.findByEmail(email).getStudent() != null){
 
-            studentDTO = (StudentDTO) _userMapper.mapToModel(userRepository.findByEmail(email).getStudent(), StudentDTO.class);
+        if (user.getStudent() != null){
+
+            studentDTO = (StudentDTO) _userMapper.mapToModel(user.getStudent(), StudentDTO.class);
             userDTO.setStudentDTO(studentDTO);
         }
 
         TeacherDTO teacherDTO;
-        if (userRepository.findByEmail(email).getTeacher() != null) {
-            teacherDTO = (TeacherDTO) _userMapper.mapToModel(userRepository.findByEmail(email).getTeacher(), TeacherDTO.class);
+        if (user.getTeacher() != null) {
+            teacherDTO = (TeacherDTO) _userMapper.mapToModel(user.getTeacher(), TeacherDTO.class);
             userDTO.setTeacherDTO(teacherDTO);
         }
 
