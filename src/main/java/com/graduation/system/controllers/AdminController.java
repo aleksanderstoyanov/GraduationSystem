@@ -8,7 +8,6 @@ import com.graduation.system.mapping.UserModelMapper;
 import com.graduation.system.models.UserEditViewModel;
 import com.graduation.system.models.UserViewModel;
 import com.graduation.system.services.impl.AdminServiceImpl;
-import com.graduation.system.user.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,10 +93,5 @@ public class AdminController {
     public String delete(@PathVariable Long id) throws Exception{
         _adminService.deleteUser(id);
         return "redirect:/admin/users";
-    }
-
-    @ExceptionHandler({UserNotFoundException.class})
-    public void handleException(){
-
     }
 }

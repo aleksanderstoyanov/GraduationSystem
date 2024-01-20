@@ -4,11 +4,14 @@ import com.graduation.system.data.dto.ReviewDTO;
 import com.graduation.system.data.dto.ThesisDTO;
 import com.graduation.system.data.entity.Review;
 import com.graduation.system.data.entity.Thesis;
+import com.graduation.system.exceptions.ReviewNotFoundException;
 import com.graduation.system.mapping.ReviewModelMapper;
 import com.graduation.system.data.repository.ReviewRepository;
 import com.graduation.system.services.contracts.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.graduation.system.messages.ErrorMessages.ReviewErrorMessages;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -22,15 +25,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review getById(Long id){
-        return _repository.findById(id).get();
+        return _repository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(ReviewErrorMessages.ReviewNotFound));
     }
     @Override
     public void createReview(ReviewDTO createDto, Long thesisId) {
         ThesisDTO thesis = _thesisService.getStudentThesisById(thesisId);
-
-        if (thesis == null){
-            throw new IllegalArgumentException();
-        }
 
         Review review = new Review();
 

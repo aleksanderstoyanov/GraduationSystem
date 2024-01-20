@@ -6,6 +6,8 @@ import com.graduation.system.data.dto.UserDTO;
 import com.graduation.system.data.entity.Application;
 import com.graduation.system.data.entity.Student;
 import com.graduation.system.data.entity.Teacher;
+import com.graduation.system.exceptions.ApplicationNotFoundException;
+import com.graduation.system.exceptions.StudentNotFoundException;
 import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.data.repository.ApplicationRepository;
 import com.graduation.system.services.contracts.ApplicationService;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.graduation.system.messages.ErrorMessages.StudentErrorMessages;
+
+import static com.graduation.system.messages.ErrorMessages.ApplicationErrorMessages;
 @Service
 @AllArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
@@ -29,8 +34,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     public void createStudentApplication(ApplicationDTO dto, String email) {
         UserDTO user = _userService.findByEmail(email);
 
-        if (user == null || user.getStudentDTO() == null) {
-            throw new IllegalArgumentException();
+        if (user.getStudentDTO() == null) {
+            throw new StudentNotFoundException(StudentErrorMessages.StudentNotFound);
         }
 
         StudentDTO student = user.getStudentDTO();
@@ -48,11 +53,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void updateApplication(ApplicationDTO dto) {
-        Application application = _repository.findById(dto.getId()).get();
-
-        if (application == null){
-            throw new IllegalArgumentException();
-        }
+        Application application = _repository.findById(dto.getId())
+                .orElseThrow(() -> new ApplicationNotFoundException(ApplicationErrorMessages.ApplicationNotFound));
 
         application.setTask(dto.getTask());
         application.setSubject(dto.getSubject());
@@ -68,11 +70,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void updateStudentApplication(ApplicationDTO dto, Long id) {
-        Application application = _repository.findById(dto.getId()).get();
-
-        if (application == null){
-            throw new IllegalArgumentException();
-        }
+        Application application = _repository.findById(dto.getId())
+                .orElseThrow(() -> new ApplicationNotFoundException(ApplicationErrorMessages.ApplicationNotFound));
 
         application.setTask(dto.getTask());
         application.setSubject(dto.getSubject());
@@ -83,27 +82,24 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void deleteStudentApplication(Long id) {
-        Application application = _repository.findById(id).get();
-
-        if (application == null){
-            throw new IllegalArgumentException();
-        }
+        Application application = _repository.findById(id)
+                .orElseThrow(() -> new ApplicationNotFoundException(ApplicationErrorMessages.ApplicationNotFound));
 
         _repository.delete(application);
     }
 
     @Override
     public ApplicationDTO getApplicationById(Long id) {
-        return (ApplicationDTO)_mapper.mapToModel(_repository.findById(id), ApplicationDTO.class);
+        return (ApplicationDTO)_mapper.mapToModel(_repository
+                .findById(id)
+                .orElseThrow(() -> new ApplicationNotFoundException(
+                        ApplicationErrorMessages.ApplicationNotFound)
+                ), ApplicationDTO.class);
     }
 
     @Override
     public List<ApplicationDTO> getStudentApplicationsByFaculty(String email) {
         UserDTO user = _userService.findByEmail(email);
-
-        if (user == null) {
-            throw new IllegalArgumentException();
-        }
 
         List<ApplicationDTO> applications = _repository.findAll()
                 .stream()
@@ -119,8 +115,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<ApplicationDTO> getStudentApplications(String email) {
         UserDTO user = _userService.findByEmail(email);
 
-        if (user == null || user.getStudentDTO() == null) {
-            throw new IllegalArgumentException();
+        if (user.getStudentDTO() == null) {
+            throw new StudentNotFoundException(StudentErrorMessages.StudentNotFound);
         }
 
         StudentDTO student = user.getStudentDTO();
