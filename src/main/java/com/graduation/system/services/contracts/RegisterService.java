@@ -1,8 +1,8 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.RegisterDTO;
-import com.graduation.system.entity.Role;
-import com.graduation.system.entity.User;
+import com.graduation.system.data.dto.RegisterDTO;
+import com.graduation.system.data.entity.Role;
+import com.graduation.system.data.entity.User;
 
 public interface RegisterService {
     User findByEgn(String egn);

@@ -1,11 +1,11 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.ThesisDTO;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.ThesisDTO;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.mapping.ThesisModelMapper;
-import com.graduation.system.viewmodels.ThesisCreateViewModel;
-import com.graduation.system.viewmodels.ThesisEditViewModel;
-import com.graduation.system.viewmodels.ThesisViewModel;
+import com.graduation.system.models.ThesisCreateViewModel;
+import com.graduation.system.models.ThesisEditViewModel;
+import com.graduation.system.models.ThesisViewModel;
 import com.graduation.system.services.impl.ThesisServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

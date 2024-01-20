@@ -1,10 +1,10 @@
 package com.graduation.system.seeding;
 
 
-import com.graduation.system.dto.RegisterDTO;
-import com.graduation.system.entity.Role;
-import com.graduation.system.enums.FacultyType;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.RegisterDTO;
+import com.graduation.system.data.entity.Role;
+import com.graduation.system.data.enums.FacultyType;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.services.impl.FacultyServiceImpl;
 import com.graduation.system.services.impl.RoleServiceImpl;
 import com.graduation.system.services.impl.RegisterServiceImpl;

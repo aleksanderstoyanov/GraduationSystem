@@ -1,12 +1,11 @@
 package com.graduation.system.services.impl;
 
 
-import com.graduation.system.entity.Faculty;
-import com.graduation.system.entity.Student;
-import com.graduation.system.entity.User;
-import com.graduation.system.repository.StudentRepository;
+import com.graduation.system.data.entity.Faculty;
+import com.graduation.system.data.entity.Student;
+import com.graduation.system.data.entity.User;
+import com.graduation.system.data.repository.StudentRepository;
 import com.graduation.system.services.contracts.StudentService;
-import com.graduation.system.services.impl.FacultyServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

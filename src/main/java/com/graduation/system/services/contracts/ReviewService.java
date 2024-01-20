@@ -1,7 +1,7 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.ReviewDTO;
-import com.graduation.system.entity.Review;
+import com.graduation.system.data.dto.ReviewDTO;
+import com.graduation.system.data.entity.Review;
 
 public interface ReviewService {
 

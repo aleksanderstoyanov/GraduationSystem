@@ -1,21 +1,20 @@
 package com.graduation.system.services.impl;
 
-import com.graduation.system.dto.*;
-import com.graduation.system.entity.Application;
-import com.graduation.system.entity.Review;
-import com.graduation.system.entity.Thesis;
-import com.graduation.system.entity.User;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.ApplicationDTO;
+import com.graduation.system.data.dto.ReviewDTO;
+import com.graduation.system.data.dto.ThesisDTO;
+import com.graduation.system.data.dto.UserDTO;
+import com.graduation.system.data.entity.Application;
+import com.graduation.system.data.entity.Review;
+import com.graduation.system.data.entity.Thesis;
+import com.graduation.system.data.repository.ThesisRepository;
 import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.mapping.ThesisModelMapper;
-import com.graduation.system.repository.ThesisRepository;
-import com.graduation.system.services.contracts.ApplicationService;
 import com.graduation.system.services.contracts.ThesisService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

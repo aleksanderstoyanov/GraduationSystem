@@ -1,7 +1,7 @@
 package com.graduation.system.services.contracts;
 
 
-import com.graduation.system.dto.UserDTO;
+import com.graduation.system.data.dto.UserDTO;
 
 import java.util.List;
 

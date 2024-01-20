@@ -1,13 +1,11 @@
 package com.graduation.system.mapping;
 
-import com.graduation.system.dto.UserDTO;
-import com.graduation.system.entity.Role;
-import com.graduation.system.entity.User;
-import com.graduation.system.enums.UserRole;
-import com.graduation.system.viewmodels.UserEditViewModel;
-import com.graduation.system.viewmodels.UserViewModel;
-import lombok.Getter;
-import lombok.Setter;
+import com.graduation.system.data.dto.UserDTO;
+import com.graduation.system.data.entity.Role;
+import com.graduation.system.data.entity.User;
+import com.graduation.system.data.enums.UserRole;
+import com.graduation.system.models.UserEditViewModel;
+import com.graduation.system.models.UserViewModel;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;

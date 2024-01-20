@@ -1,8 +1,7 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.RegisterDTO;
-import com.graduation.system.enums.FacultyType;
-import com.graduation.system.services.contracts.UserService;
+import com.graduation.system.data.dto.RegisterDTO;
+import com.graduation.system.data.enums.FacultyType;
 import com.graduation.system.services.impl.CustomUserDetailsServiceImpl;
 import com.graduation.system.services.impl.RegisterServiceImpl;
 import jakarta.validation.Valid;

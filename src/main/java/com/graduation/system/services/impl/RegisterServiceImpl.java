@@ -1,11 +1,11 @@
 package com.graduation.system.services.impl;
 
 
-import com.graduation.system.dto.RegisterDTO;
-import com.graduation.system.entity.Faculty;
-import com.graduation.system.entity.Role;
-import com.graduation.system.entity.User;
-import com.graduation.system.repository.UserRepository;
+import com.graduation.system.data.dto.RegisterDTO;
+import com.graduation.system.data.entity.Faculty;
+import com.graduation.system.data.entity.Role;
+import com.graduation.system.data.entity.User;
+import com.graduation.system.data.repository.UserRepository;
 import com.graduation.system.services.contracts.RegisterService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

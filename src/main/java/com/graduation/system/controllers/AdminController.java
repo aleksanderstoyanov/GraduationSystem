@@ -1,23 +1,21 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.UserDTO;
-import com.graduation.system.enums.FacultyType;
-import com.graduation.system.enums.Position;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.UserDTO;
+import com.graduation.system.data.enums.FacultyType;
+import com.graduation.system.data.enums.Position;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.mapping.UserModelMapper;
-import com.graduation.system.viewmodels.UserEditViewModel;
-import com.graduation.system.viewmodels.UserViewModel;
+import com.graduation.system.models.UserEditViewModel;
+import com.graduation.system.models.UserViewModel;
 import com.graduation.system.services.impl.AdminServiceImpl;
+import com.graduation.system.user.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +46,8 @@ public class AdminController {
     public String edit(@PathVariable Long id, Model model){
 
         UserDTO user = _adminService.findById(id);
+
+
         UserEditViewModel viewModel = _userMapper
                     .mapToUserEditViewModel(user);
 
@@ -94,5 +94,10 @@ public class AdminController {
     public String delete(@PathVariable Long id) throws Exception{
         _adminService.deleteUser(id);
         return "redirect:/admin/users";
+    }
+
+    @ExceptionHandler({UserNotFoundException.class})
+    public void handleException(){
+
     }
 }

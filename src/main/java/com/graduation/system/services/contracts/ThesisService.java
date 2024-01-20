@@ -1,7 +1,7 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.ReviewDTO;
-import com.graduation.system.dto.ThesisDTO;
+import com.graduation.system.data.dto.ReviewDTO;
+import com.graduation.system.data.dto.ThesisDTO;
 
 import java.util.List;
 

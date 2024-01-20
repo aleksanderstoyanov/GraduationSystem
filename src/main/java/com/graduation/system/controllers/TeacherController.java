@@ -1,7 +1,6 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.entity.User;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.services.impl.ApplicationServiceImpl;
 import com.graduation.system.services.impl.TeacherServiceImpl;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.security.PrivilegedAction;
 
 @Controller
 @AllArgsConstructor

@@ -1,10 +1,10 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.ReviewDTO;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.ReviewDTO;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.mapping.ReviewModelMapper;
-import com.graduation.system.viewmodels.ReviewCreateViewModel;
-import com.graduation.system.viewmodels.ReviewViewModel;
+import com.graduation.system.models.ReviewCreateViewModel;
+import com.graduation.system.models.ReviewViewModel;
 import com.graduation.system.services.impl.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

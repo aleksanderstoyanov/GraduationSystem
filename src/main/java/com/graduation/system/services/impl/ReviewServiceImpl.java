@@ -1,11 +1,11 @@
 package com.graduation.system.services.impl;
 
-import com.graduation.system.dto.ReviewDTO;
-import com.graduation.system.dto.ThesisDTO;
-import com.graduation.system.entity.Review;
-import com.graduation.system.entity.Thesis;
+import com.graduation.system.data.dto.ReviewDTO;
+import com.graduation.system.data.dto.ThesisDTO;
+import com.graduation.system.data.entity.Review;
+import com.graduation.system.data.entity.Thesis;
 import com.graduation.system.mapping.ReviewModelMapper;
-import com.graduation.system.repository.ReviewRepository;
+import com.graduation.system.data.repository.ReviewRepository;
 import com.graduation.system.services.contracts.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

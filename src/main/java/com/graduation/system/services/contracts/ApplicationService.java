@@ -1,7 +1,6 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.ApplicationDTO;
-import com.graduation.system.entity.Application;
+import com.graduation.system.data.dto.ApplicationDTO;
 
 import java.util.List;
 

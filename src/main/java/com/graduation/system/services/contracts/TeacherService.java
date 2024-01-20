@@ -1,8 +1,7 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.dto.TeacherDTO;
-import com.graduation.system.entity.Teacher;
-import com.graduation.system.enums.Position;
+import com.graduation.system.data.dto.TeacherDTO;
+import com.graduation.system.data.enums.Position;
 
 public interface TeacherService {
     Position getPositionByName(String name);

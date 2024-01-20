@@ -1,13 +1,12 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.dto.ApplicationDTO;
-import com.graduation.system.enums.UserRole;
+import com.graduation.system.data.dto.ApplicationDTO;
+import com.graduation.system.data.enums.UserRole;
 import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.services.impl.ApplicationServiceImpl;
-import com.graduation.system.viewmodels.ApplicationCreateViewModel;
-import com.graduation.system.viewmodels.ApplicationEditViewModel;
-import com.graduation.system.viewmodels.ApplicationViewModel;
-import com.graduation.system.viewmodels.UserViewModel;
+import com.graduation.system.models.ApplicationCreateViewModel;
+import com.graduation.system.models.ApplicationEditViewModel;
+import com.graduation.system.models.ApplicationViewModel;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,16 +1,13 @@
 package com.graduation.system.services.impl;
 
-import com.graduation.system.dto.ApplicationDTO;
-import com.graduation.system.dto.TeacherDTO;
-import com.graduation.system.dto.UserDTO;
-import com.graduation.system.entity.Application;
-import com.graduation.system.entity.Student;
-import com.graduation.system.entity.Teacher;
-import com.graduation.system.entity.User;
-import com.graduation.system.enums.Position;
+import com.graduation.system.data.dto.ApplicationDTO;
+import com.graduation.system.data.dto.TeacherDTO;
+import com.graduation.system.data.dto.UserDTO;
+import com.graduation.system.data.entity.Teacher;
+import com.graduation.system.data.enums.Position;
 import com.graduation.system.mapping.ApplicationModelMapper;
 import com.graduation.system.mapping.TeacherModelMapper;
-import com.graduation.system.repository.TeacherRepository;
+import com.graduation.system.data.repository.TeacherRepository;
 import com.graduation.system.services.contracts.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

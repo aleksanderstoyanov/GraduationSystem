@@ -1,6 +1,6 @@
 package com.graduation.system.services.contracts;
 
-import com.graduation.system.entity.Role;
+import com.graduation.system.data.entity.Role;
 
 public interface RoleService {
 
