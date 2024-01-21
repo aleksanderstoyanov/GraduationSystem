@@ -119,12 +119,12 @@ public class ReviewControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "test", password = "123123", authorities = {"STUDENT"} )
+    @WithMockUser(username = "test", password = "123123", authorities = {"NONE"} )
     public void details_Page_Should_Be_Forbidden() throws Exception {
 
         // Arrange
         RequestBuilder request = get("/reviews/details/1");
-        ResultMatcher matcher = content().string(containsString("Test"));
+        ResultMatcher matcher = status().isForbidden();
 
         when(reviewService.getById(1L)).thenReturn(dto);
         when(reviewModelMapper.mapToModel(dto, ReviewViewModel.class)).thenReturn(viewModel);

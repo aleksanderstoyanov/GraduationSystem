@@ -68,7 +68,7 @@ public class TeacherController {
         boolean hasAuthority = authentication
                 .getAuthorities()
                 .stream()
-                .filter(authority -> authority.getAuthority() == role)
+                .filter(authority -> authority.getAuthority().equals(role))
                 .findAny().isPresent();
 
         return hasAuthority;
