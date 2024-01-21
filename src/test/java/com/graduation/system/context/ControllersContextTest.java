@@ -1,6 +1,7 @@
 package com.graduation.system.context;
 
 import com.graduation.system.controllers.AdminController;
+import com.graduation.system.controllers.AuthController;
 import com.graduation.system.controllers.HomeController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class ControllersContextTest {
     @Autowired
     private AdminController adminController;
 
+    @Autowired
+    private AuthController authController;
     @Test
     public void assert_That_Home_Controller_Is_Not_Null(){
         assertThat(homeController).isNotNull();
@@ -25,5 +28,10 @@ public class ControllersContextTest {
     @Test
     public void assert_That_Admin_Controller_Is_Not_Null(){
         assertThat(adminController).isNotNull();
+    }
+
+    @Test
+    public void assert_That_Auth_Controller_Is_Not_Null(){
+        assertThat(authController).isNotNull();
     }
 }
