@@ -21,7 +21,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(HomeController.class)
 @Import(SecurityConfig.class)
 public class HomeControllerTest {
@@ -29,7 +28,7 @@ public class HomeControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void indexPageShouldReturnDefaultGreetingMessage() throws Exception {
+    public void home_Page_Should_Return_Default_Greeting_Message() throws Exception {
         // Arrange
         RequestBuilder request = get("/");
         ResultMatcher matcher = content().string(containsString("Hello anonymousUser!"));
@@ -41,7 +40,7 @@ public class HomeControllerTest {
 
     @Test
     @WithMockUser(username = "test", password = "123123", roles = "USER")
-    public void indexPageShouldReturnUserGreetingMessage() throws Exception{
+    public void home_Page_Should_Return_User_Greeting_Message() throws Exception{
         // Arrange
         RequestBuilder request = get("/");
         ResultMatcher matcher = content().string(containsString("Hello test!"));
