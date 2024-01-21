@@ -42,12 +42,7 @@ public class ReviewsController {
         ReviewViewModel reviewModel =
                 Arrays.asList(_reviewService.getById(id))
                         .stream()
-                        .map(review -> new ReviewViewModel(
-                                review.getId(),
-                                review.getText(),
-                                review.getSummary(),
-                                review.isGranted()
-                        ))
+                        .map(review -> (ReviewViewModel) _reviewMapper.mapToModel(review, ReviewViewModel.class))
                         .collect(Collectors.toList())
                         .get(0);
 
@@ -105,7 +100,7 @@ public class ReviewsController {
         boolean hasAuthority = authentication
                 .getAuthorities()
                 .stream()
-                .filter(authority -> authority.getAuthority() == role)
+                .filter(authority -> authority.getAuthority().equals(role))
                 .findAny().isPresent();
 
         return hasAuthority;

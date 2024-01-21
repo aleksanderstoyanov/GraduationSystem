@@ -1,9 +1,6 @@
 package com.graduation.system.context;
 
-import com.graduation.system.controllers.AdminController;
-import com.graduation.system.controllers.ApplicationsController;
-import com.graduation.system.controllers.AuthController;
-import com.graduation.system.controllers.HomeController;
+import com.graduation.system.controllers.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +22,9 @@ public class ControllersContextTest {
     @Autowired
     private ApplicationsController applicationsController;
 
+    @Autowired
+    private ReviewsController reviewsController;
+
     @Test
     public void assert_That_Home_Controller_Is_Not_Null(){
         assertThat(homeController).isNotNull();
@@ -43,5 +43,10 @@ public class ControllersContextTest {
     @Test
     public void assert_That_Applications_Controller_Is_Not_Null(){
         assertThat(applicationsController).isNotNull();
+    }
+
+    @Test
+    public void assert_That_Reviews_Controller_Is_Not_Null(){
+        assertThat(reviewsController).isNotNull();
     }
 }
