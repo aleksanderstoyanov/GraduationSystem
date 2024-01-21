@@ -18,12 +18,12 @@ public class ControllersContextTest {
     private AdminController adminController;
 
     @Test
-    public void assertThatHomeControllerIsNotNull(){
+    public void assert_That_Home_Controller_Is_Not_Null(){
         assertThat(homeController).isNotNull();
     }
 
     @Test
-    public void assertThatAdminControllerIsNot(){
+    public void assert_That_Admin_Controller_Is_Not_Null(){
         assertThat(adminController).isNotNull();
     }
 }
