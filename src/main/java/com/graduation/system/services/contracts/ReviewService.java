@@ -5,6 +5,6 @@ import com.graduation.system.data.entity.Review;
 
 public interface ReviewService {
 
-    Review getById(Long id);
+    ReviewDTO getById(Long id);
     void createReview(ReviewDTO createDto, Long thesisId);
 }

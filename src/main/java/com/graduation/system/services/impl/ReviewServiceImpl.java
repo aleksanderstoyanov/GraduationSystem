@@ -24,9 +24,9 @@ public class ReviewServiceImpl implements ReviewService {
     private ThesisServiceImpl _thesisService;
 
     @Override
-    public Review getById(Long id){
-        return _repository.findById(id)
-                .orElseThrow(() -> new ReviewNotFoundException(ReviewErrorMessages.ReviewNotFound));
+    public ReviewDTO getById(Long id){
+        return (ReviewDTO) _mapper.mapToModel(_repository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(ReviewErrorMessages.ReviewNotFound)), ReviewDTO.class);
     }
     @Override
     public void createReview(ReviewDTO createDto, Long thesisId) {
