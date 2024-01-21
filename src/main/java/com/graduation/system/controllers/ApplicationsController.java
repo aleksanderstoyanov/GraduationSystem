@@ -184,8 +184,7 @@ public class ApplicationsController {
         boolean hasAuthority = authentication
                 .getAuthorities()
                 .stream()
-                .filter(authority -> authority.getAuthority() == role)
-                .findAny().isPresent();
+                .anyMatch(authority -> authority.getAuthority().equals(role));
 
         return hasAuthority;
     }

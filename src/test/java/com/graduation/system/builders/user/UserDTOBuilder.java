@@ -1,4 +1,4 @@
-package com.graduation.system.builders;
+package com.graduation.system.builders.user;
 
 import com.graduation.system.data.dto.UserDTO;
 import com.graduation.system.data.enums.UserRole;

@@ -1,7 +1,7 @@
 package com.graduation.system.controllers;
 
-import com.graduation.system.builders.UserDTOBuilder;
-import com.graduation.system.builders.UserEditViewModelBuilder;
+import com.graduation.system.builders.user.UserDTOBuilder;
+import com.graduation.system.builders.user.UserEditViewModelBuilder;
 import com.graduation.system.config.MappingConfig;
 import com.graduation.system.config.SecurityConfig;
 import com.graduation.system.data.dto.UserDTO;
@@ -11,14 +11,12 @@ import com.graduation.system.models.UserEditViewModel;
 import com.graduation.system.services.impl.AdminServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 
