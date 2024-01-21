@@ -25,6 +25,9 @@ public class ControllersContextTest {
     @Autowired
     private ReviewsController reviewsController;
 
+    @Autowired
+    private TeacherController teacherController;
+
     @Test
     public void assert_That_Home_Controller_Is_Not_Null(){
         assertThat(homeController).isNotNull();
@@ -48,5 +51,10 @@ public class ControllersContextTest {
     @Test
     public void assert_That_Reviews_Controller_Is_Not_Null(){
         assertThat(reviewsController).isNotNull();
+    }
+
+    @Test
+    public void assert_That_Teacher_Controller_Is_Not_Null(){
+        assertThat(teacherController).isNotNull();
     }
 }
