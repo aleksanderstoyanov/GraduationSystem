@@ -1,6 +1,7 @@
 package com.graduation.system.context;
 
 import com.graduation.system.controllers.AdminController;
+import com.graduation.system.controllers.ApplicationsController;
 import com.graduation.system.controllers.AuthController;
 import com.graduation.system.controllers.HomeController;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,10 @@ public class ControllersContextTest {
 
     @Autowired
     private AuthController authController;
+
+    @Autowired
+    private ApplicationsController applicationsController;
+
     @Test
     public void assert_That_Home_Controller_Is_Not_Null(){
         assertThat(homeController).isNotNull();
@@ -33,5 +38,10 @@ public class ControllersContextTest {
     @Test
     public void assert_That_Auth_Controller_Is_Not_Null(){
         assertThat(authController).isNotNull();
+    }
+
+    @Test
+    public void assert_That_Applications_Controller_Is_Not_Null(){
+        assertThat(applicationsController).isNotNull();
     }
 }
