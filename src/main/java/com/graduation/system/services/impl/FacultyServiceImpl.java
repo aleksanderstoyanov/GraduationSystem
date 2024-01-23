@@ -22,7 +22,10 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public void create(String name){
-        if (getByName(name) == null){
+        try{
+            getByName(name);
+        }
+        catch(FacultyNotFoundException exception){
             Faculty faculty = new Faculty();
             faculty.setName(Enum.valueOf(FacultyType.class, name).name());
             _repository.save(faculty);
