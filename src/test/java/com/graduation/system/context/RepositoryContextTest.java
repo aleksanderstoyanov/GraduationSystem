@@ -1,6 +1,7 @@
 package com.graduation.system.context;
 
 import com.graduation.system.data.repository.FacultyRepository;
+import com.graduation.system.data.repository.ReviewRepository;
 import com.graduation.system.data.repository.RoleRepository;
 import com.graduation.system.data.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,9 @@ public class RepositoryContextTest {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Test
     public void assert_That_User_Repository_Is_Not_Null(){
         assertThat(userRepository).isNotNull();
@@ -33,6 +37,11 @@ public class RepositoryContextTest {
 
     @Test
     public void assert_That_Role_Repository_Is_Not_Null(){
-        assertThat(facultyRepository).isNotNull();
+        assertThat(roleRepository).isNotNull();
+    }
+
+    @Test
+    public void assert_That_Review_Repository_Is_Not_Null(){
+        assertThat(reviewRepository).isNotNull();
     }
 }
