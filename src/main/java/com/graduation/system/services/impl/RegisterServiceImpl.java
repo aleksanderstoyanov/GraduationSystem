@@ -6,6 +6,7 @@ import com.graduation.system.data.entity.Faculty;
 import com.graduation.system.data.entity.Role;
 import com.graduation.system.data.entity.User;
 import com.graduation.system.data.repository.UserRepository;
+import com.graduation.system.exceptions.FacultyNotFoundException;
 import com.graduation.system.exceptions.UserAlreadyExistsException;
 import com.graduation.system.services.contracts.RegisterService;
 import com.graduation.system.exceptions.UserNotFoundException;
@@ -47,7 +48,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public void register(RegisterDTO registerDto) throws Exception{
-        if (_repository.findByUsername(registerDto.getUsername()) != null){
+        if (_repository.findByUsername(registerDto.getUsername()).isEmpty() == false){
             return;
         }
         else{
@@ -75,7 +76,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public void registerWithRole(RegisterDTO registerDto, Role role) throws Exception{
-        if (_repository.findByUsername(registerDto.getUsername()) != null){
+        if (_repository.findByUsername(registerDto.getUsername()).isEmpty() == false){
             throw new UserAlreadyExistsException(UserErrorMessages.UserAlreadyExists);
         }
         else{
@@ -92,7 +93,6 @@ public class RegisterServiceImpl implements RegisterService {
             Faculty faculty = _facultyService.getByName(registerDto.getFaculty());
 
             if(faculty != null){
-
                 user.setFaculty(faculty);
             }
             _repository.save(user);

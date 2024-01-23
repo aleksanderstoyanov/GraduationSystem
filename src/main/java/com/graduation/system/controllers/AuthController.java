@@ -2,6 +2,7 @@ package com.graduation.system.controllers;
 
 import com.graduation.system.data.dto.RegisterDTO;
 import com.graduation.system.data.enums.FacultyType;
+import com.graduation.system.exceptions.UserNotFoundException;
 import com.graduation.system.services.impl.CustomUserDetailsServiceImpl;
 import com.graduation.system.services.impl.RegisterServiceImpl;
 import jakarta.validation.Valid;
@@ -49,28 +50,31 @@ public class AuthController {
             return "auth/register.html";
         }
 
-        if(_registerService.findByEgn(registerDto.getEgn()) != null){
-            bindingResult.rejectValue("egn", "error.user", "EGN is already taken!");
-            List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
-            model.addAttribute("faculties", faculties);
-            return "auth/register.html";
-        }
+        try{
+            if(_registerService.findByEgn(registerDto.getEgn()) != null){
+                bindingResult.rejectValue("egn", "error.user", "EGN is already taken!");
+                List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
+                model.addAttribute("faculties", faculties);
+                return "auth/register.html";
+            }
 
-        if(_registerService.findByUsername(registerDto.getUsername()) != null){
-            bindingResult.rejectValue("username", "error.user", "Username is already taken!");
-            List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
-            model.addAttribute("faculties", faculties);
-            return "auth/register.html";
-        }
+            if(_registerService.findByUsername(registerDto.getUsername()) != null){
+                bindingResult.rejectValue("username", "error.user", "Username is already taken!");
+                List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
+                model.addAttribute("faculties", faculties);
+                return "auth/register.html";
+            }
 
-        if(_userService.findByEmail(registerDto.getEmail()) != null){
-            bindingResult.rejectValue("email", "error.user", "Email is already taken!");
-            List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
-            model.addAttribute("faculties", faculties);
-            return "auth/register.html";
+            if(_userService.findByEmail(registerDto.getEmail()) != null){
+                bindingResult.rejectValue("email", "error.user", "Email is already taken!");
+                List<FacultyType> faculties = Arrays.stream(FacultyType.values()).toList();
+                model.addAttribute("faculties", faculties);
+                return "auth/register.html";
+            }
         }
-
-        _registerService.register(registerDto);
+        catch(UserNotFoundException exception){
+            _registerService.register(registerDto);
+        }
 
         return "redirect:/login";
     }
