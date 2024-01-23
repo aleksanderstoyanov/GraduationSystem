@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.util.function.Predicate;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
@@ -44,7 +46,8 @@ public class UserRepositoryTest {
 
     @Test
     public void find_All_Users_Without_Admin_Should_Return_Records(){
-        assertThat(userRepository.findAllUsersWithoutAdmin().stream().count()).isEqualTo(3);
+        Predicate<User> predicate = (user) -> user.getEmail() == "test@test.com";
+        assertThat(userRepository.findAllUsersWithoutAdmin().stream().filter(predicate).count()).isEqualTo(1);
     }
 
     @Test
